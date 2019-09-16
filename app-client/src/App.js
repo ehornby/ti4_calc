@@ -15,7 +15,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      inProgress: false
     };
   }
 
@@ -23,16 +24,34 @@ class App extends Component {
     this.setState({ loggedIn: auth });
   }
 
+  changeProgressStatus = prog => {
+    this.setState({ inProgress: prog });
+  }
+
   handleLogout = async event => {
     await Auth.signOut();
-    this.authStatus(false);
+    this.changeAuthStatus(false);
     this.props.history.push("/login");
+  }
+
+  async componentDidMount() {
+    try {
+      await Auth.currentSession();
+      this.changeAuthStatus(true);
+    }
+    catch (e) {
+      if (e!== 'No current user') {
+        alert(e);
+      }
+    }
   }
 
   render() {
     const props = {
       changeAuthStatus: this.changeAuthStatus,
-      loggedIn: this.loggedIn
+      loggedIn: this.state.loggedIn,
+      inProgress: this.state.inProgress,
+      changeProgressStatus: this.changeProgressStatus
     }
 
     return (
@@ -42,7 +61,7 @@ class App extends Component {
           fluid
           collapseOnSelect
         >
-          <NavbarBrand href="/home">TI4</NavbarBrand>
+          <NavbarBrand href="/">TI4</NavbarBrand>
             <NavbarCollapse className = "justify-content-end">
               {!this.state.loggedIn
               ?
@@ -59,9 +78,21 @@ class App extends Component {
                 </Nav>
               </Fragment>
               :
-              <Nav>
-                <NavLink onClick={this.handleLogout}>Logout</NavLink>
-              </Nav>
+              <Fragment>
+                <Nav>
+                  <LinkContainer to="/new">
+                    <NavLink>New Game</NavLink>
+                  </LinkContainer>
+                </Nav>
+                <Nav>
+                  <LinkContainer to="/results">
+                      <NavLink>Results</NavLink>
+                  </LinkContainer>
+                </Nav>
+                <Nav>
+                  <NavLink onClick={this.handleLogout}>Logout</NavLink>
+                </Nav>
+              </Fragment>
               }
             </NavbarCollapse>
         </Navbar>
