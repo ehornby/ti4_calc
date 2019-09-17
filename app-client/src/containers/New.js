@@ -5,6 +5,14 @@ import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownToggle from 'react-bootstrap/DropdownToggle';
+import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import DropdownItem from 'react-bootstrap/DropdownItem';
+import Form from 'react-bootstrap/Form';
+import FormGroup from 'react-bootstrap/FormGroup';
+import FormControl from 'react-bootstrap/FormControl';
+
 
 export default class New extends Component {
     constructor(props) {
@@ -12,11 +20,14 @@ export default class New extends Component {
 
         this.state = {
             isLoading: false,
+            selectingPlayers: false,
+            numPlayers: 0,
+            playerData: ""
         }
     }
 
-    // Will need to figure out how to persist new game state through 
-    // page refresh
+    // Implement DB call to users table on new game start, to set 
+    // inProgress flag that gets referenced 
     handleClose(startNew) {
         this.props.changeProgressStatus(startNew);
         if (!startNew) {
@@ -24,29 +35,73 @@ export default class New extends Component {
         }
     }
 
-    // Need to implement body of modal - dropdown for selecting number
-    // of players and fields to enter names (maybe a list for tracking?)
+    selectPlayers(num) {
+        this.setState({ numPlayers: num });
+        this.setState({ selectingPlayers: true });
+    }
+
+    // Generates player name inputs based on dropdown selection
+    generatePlayerTable() {
+        var players = [];
+        for (var i = 0; i < this.state.numPlayers; i++) {
+            players.push(
+                <FormGroup controlId={`player${i+1}`}>
+                    <FormControl type="text" placeholder={`Player ${i+1}`} />
+                </FormGroup>
+            );
+        }
+        return players;
+    }
+
+    // Makes call to users table to save progress state
+    saveProgressStatus() {
+
+    }
+
+    // Renders the modal allowing player number selection and name entry
+    // Need to figure out how to link this to a player data object
     newGame = () => {
         return (
-            <div>
-                <Modal show={!this.props.inProgress} onHide={() => this.handleClose()}>
+            <div className="New">
+                <Modal 
+                    show={!this.props.inProgress} 
+                    onHide={() => this.handleClose()}
+                    className="player-dropdown"
+                >
                     <ModalHeader>
                         <ModalTitle>Start new game</ModalTitle>
                     </ModalHeader>
-                    <ModalBody>Test</ModalBody>
+                    <ModalBody>
+                        <Dropdown onSelect={(eventKey) => this.selectPlayers(eventKey)}>
+                            <DropdownToggle variant="info" id="num-players">
+                                Select number of players
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem eventKey="3">3</DropdownItem>
+                                <DropdownItem eventKey="4">4</DropdownItem>
+                                <DropdownItem eventKey="5">5</DropdownItem>
+                                <DropdownItem eventKey="6">6</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <Form className="player-table">
+                        {this.generatePlayerTable()}
+                        </Form>
+                    </ModalBody>
                     <ModalFooter>
+                        {this.state.selectingPlayers
+                        ?
+                        <Button variant="primary" onClick={() => this.handleClose(true)}>
+                            Start
+                        </Button>
+                        : null}
                         <Button variant="secondary" onClick={() => this.handleClose(false)}>
                             Close
-                        </Button>
-                        <Button variant="primary" onClick={() => this.handleClose(true)}>
-                            Start game
                         </Button>
                     </ModalFooter>
                 </Modal>
             </div>
         );
     }
-
     
     gameInProgress = () => {
         return (

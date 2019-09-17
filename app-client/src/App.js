@@ -34,6 +34,8 @@ class App extends Component {
     this.props.history.push("/login");
   }
 
+  // Will need to save inProgress state in a users table, and make a DB
+  // call to retrieve on page load
   async componentDidMount() {
     try {
       await Auth.currentSession();
@@ -81,7 +83,13 @@ class App extends Component {
               <Fragment>
                 <Nav>
                   <LinkContainer to="/new">
-                    <NavLink>New Game</NavLink>
+                    <NavLink>
+                      {!this.state.inProgress 
+                      ? 
+                      "New Game" 
+                      : 
+                      "Continue Game"}
+                      </NavLink>
                   </LinkContainer>
                 </Nav>
                 <Nav>
