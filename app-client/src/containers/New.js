@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import ModalTitle from 'react-bootstrap/ModalTitle';
@@ -22,33 +22,62 @@ export default class New extends Component {
             isLoading: false,
             selectingPlayers: false,
             numPlayers: 0,
-            playerData: ""
+            playerNames: []
         }
     }
 
-    // Implement DB call to users table on new game start, to set 
-    // inProgress flag that gets referenced 
-    handleClose(startNew) {
-        this.props.changeProgressStatus(startNew);
-        if (!startNew) {
-            this.props.history.push("/");
+    // Closes modal and redirects user to lander page
+    handleClose() {
+        this.props.changeProgressStatus(false);
+        this.props.history.push("/");
+    }
+
+    // Ensures playerName array contains the correct number of names
+    // and starts score tracking 
+    // - Implement DB call to users table on new game start, to set 
+    //   inProgress flag that gets referenced 
+    // - Add functionality to prevent form submit if any fields are empty
+    handleStart() {
+        this.props.changeProgressStatus(true);
+
+        const numPlayers = this.state.numPlayers;
+        const playerNames = this.state.playerNames;
+        if (numPlayers !== playerNames.length) {
+            playerNames.splice(numPlayers, playerNames.length-numPlayers)
         }
     }
 
+    handleChange (index, newValue) {
+        const updatedArray = [...this.state.playerNames];
+        updatedArray[index] = newValue;
+        this.setState({
+            playerNames: updatedArray
+        });
+    }
+
+    // Sets number of players, sets the selectingPlayers flag to true
+    // to enable correct buttons in modal, and sets the correct number
+    // of fields in the playerNames array
     selectPlayers(num) {
         this.setState({ numPlayers: num });
         this.setState({ selectingPlayers: true });
     }
 
-    // Generates player name inputs based on dropdown selection
+    // Generates player name inputs based on dropdown selection and adds
+    // player names to array in state
     generatePlayerTable() {
-        var players = [];
-        for (var i = 0; i < this.state.numPlayers; i++) {
+        let players = [];
+        for (let i = 0; i < this.state.numPlayers; i++) {
             players.push(
-                <FormGroup controlId={`player${i+1}`}>
-                    <FormControl type="text" placeholder={`Player ${i+1}`} />
+                <FormGroup controlId={`player${i}`} className="player">
+                    <FormControl 
+                        type="text" 
+                        placeholder={`Player ${i+1}`}
+                        value={this.state.playerNames[i]}
+                        onChange={e => this.handleChange(i, e.target.value)}
+                         />
                 </FormGroup>
-            );
+            );       
         }
         return players;
     }
@@ -59,13 +88,11 @@ export default class New extends Component {
     }
 
     // Renders the modal allowing player number selection and name entry
-    // Need to figure out how to link this to a player data object
     newGame = () => {
         return (
             <div className="New">
                 <Modal 
                     show={!this.props.inProgress} 
-                    onHide={() => this.handleClose()}
                     className="player-dropdown"
                 >
                     <ModalHeader>
@@ -90,11 +117,11 @@ export default class New extends Component {
                     <ModalFooter>
                         {this.state.selectingPlayers
                         ?
-                        <Button variant="primary" onClick={() => this.handleClose(true)}>
+                        <Button variant="primary" onClick={() => this.handleStart()}>
                             Start
                         </Button>
                         : null}
-                        <Button variant="secondary" onClick={() => this.handleClose(false)}>
+                        <Button variant="secondary" onClick={() => this.handleClose()}>
                             Close
                         </Button>
                     </ModalFooter>
@@ -103,16 +130,30 @@ export default class New extends Component {
         );
     }
     
+    // 
+    generateGameTable = () => {
+        let players = [];
+        let gameData = this.props.gameData;
+        for (let i = 0; i < gameData.length; i++) {
+            players.push(
+                <h1>{gameData[i][0]} {gameData[i][1]}</h1>
+            );
+        }
+        return (
+            players
+        );
+    }
+
     gameInProgress = () => {
         return (
-            <h1> progress test</h1>
+            this.generateGameTable()
         );
     }
 
     render() {
         return (
             <div>
-                {this.state.inProgress
+                {this.props.inProgress
                 ?
                 <Fragment>
                     {this.gameInProgress()}

@@ -16,7 +16,8 @@ class App extends Component {
 
     this.state = {
       loggedIn: false,
-      inProgress: false
+      inProgress: false,
+      gameData: []
     };
   }
 
@@ -53,14 +54,14 @@ class App extends Component {
       changeAuthStatus: this.changeAuthStatus,
       loggedIn: this.state.loggedIn,
       inProgress: this.state.inProgress,
-      changeProgressStatus: this.changeProgressStatus
+      changeProgressStatus: this.changeProgressStatus,
+      gameData: this.state.gameData
     }
 
     return (
       <div>
         <Navbar 
           bg="light"
-          fluid
           collapseOnSelect
         >
           <NavbarBrand href="/">TI4</NavbarBrand>
