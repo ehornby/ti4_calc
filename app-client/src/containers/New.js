@@ -12,7 +12,8 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
-
+import Table from 'react-bootstrap/Table';
+import ScoreCounter from '../components/ScoreCounter';
 
 export default class New extends Component {
     constructor(props) {
@@ -45,6 +46,7 @@ export default class New extends Component {
         if (numPlayers !== playerNames.length) {
             playerNames.splice(numPlayers, playerNames.length-numPlayers)
         }
+        this.props.createGameData(playerNames);
     }
 
     handleChange (index, newValue) {
@@ -84,7 +86,7 @@ export default class New extends Component {
 
     // Makes call to users table to save progress state
     saveProgressStatus() {
-
+        // Not implemented yet
     }
 
     // Renders the modal allowing player number selection and name entry
@@ -130,23 +132,41 @@ export default class New extends Component {
         );
     }
     
-    // 
+    // Iterates over gameData object to create a table of player
+    // names and scores
     generateGameTable = () => {
-        let players = [];
-        let gameData = this.props.gameData;
-        for (let i = 0; i < gameData.length; i++) {
+        var gameData = this.props.gameData;
+        var players = [];
+
+        for (var key in gameData) {
+            let name = gameData[key][0];
+            let score = gameData[key][1];
+
             players.push(
-                <h1>{gameData[i][0]} {gameData[i][1]}</h1>
+                <tr>
+                    <td>{name}</td>
+                    <td><ScoreCounter /></td>
+                </tr>
             );
         }
-        return (
-            players
-        );
+        return players;
     }
 
+    // Creates table of player scores including update functionality
     gameInProgress = () => {
         return (
-            this.generateGameTable()
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.generateGameTable()}
+                </tbody>
+            </Table>
         );
     }
 

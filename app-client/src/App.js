@@ -17,9 +17,25 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       inProgress: false,
-      gameData: []
+      gameData: {
+        player1: ["test", 0, "test"]
+      }
     };
   }
+
+  // Creates gameData object with correct number of players
+  // gameData format: [playername, score, race]
+  createGameData = (playerNames) => {
+    let gameData = {};
+    for (let i = 1; i <= playerNames.length; i++) {
+      gameData[`player${i}`] = [playerNames[i-1], 0, ""]
+    }
+    this.setState({ gameData });
+  }
+
+  // updateScore =  => {
+    
+  // }
 
   changeAuthStatus = auth => {
     this.setState({ loggedIn: auth });
@@ -55,7 +71,9 @@ class App extends Component {
       loggedIn: this.state.loggedIn,
       inProgress: this.state.inProgress,
       changeProgressStatus: this.changeProgressStatus,
-      gameData: this.state.gameData
+      gameData: this.state.gameData,
+      createGameData: this.createGameData,
+      updateScore: this.updateScore
     }
 
     return (
