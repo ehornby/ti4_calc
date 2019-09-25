@@ -23,7 +23,7 @@ export default class New extends Component {
             isLoading: false,
             selectingPlayers: false,
             numPlayers: 0,
-            playerNames: []
+            playerNames: [],
         }
     }
 
@@ -38,7 +38,7 @@ export default class New extends Component {
     // - Implement DB call to users table on new game start, to set 
     //   inProgress flag that gets referenced 
     // - Add functionality to prevent form submit if any fields are empty
-    handleStart() {
+    handleStart = event =>{
         this.props.changeProgressStatus(true);
 
         const numPlayers = this.state.numPlayers;
@@ -72,7 +72,8 @@ export default class New extends Component {
         for (let i = 0; i < this.state.numPlayers; i++) {
             players.push(
                 <FormGroup controlId={`player${i}`} className="player">
-                    <FormControl 
+                    <FormControl
+                        required 
                         type="text" 
                         placeholder={`Player ${i+1}`}
                         value={this.state.playerNames[i]}
@@ -112,18 +113,24 @@ export default class New extends Component {
                                 <DropdownItem eventKey="6">6</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <Form className="player-table">
+                        <Form className="player-table" onSubmit={this.handleStart}>
                         {this.generatePlayerTable()}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
                         {this.state.selectingPlayers
                         ?
-                        <Button variant="primary" onClick={() => this.handleStart()}>
+                        <Button 
+                            variant="primary"
+                            onClick={() => this.handleStart()}
+                        >
                             Start
                         </Button>
                         : null}
-                        <Button variant="secondary" onClick={() => this.handleClose()}>
+                        <Button 
+                            variant="secondary" 
+                            onClick={() => this.handleClose()}
+                        >
                             Close
                         </Button>
                     </ModalFooter>
@@ -145,7 +152,13 @@ export default class New extends Component {
             players.push(
                 <tr>
                     <td>{name}</td>
-                    <td><ScoreCounter /></td>
+                    <td>
+                        <ScoreCounter 
+                            score={score} 
+                            updateScore={this.props.updateScore}
+                            playerId={key}                                 
+                        />
+                    </td>
                 </tr>
             );
         }

@@ -17,9 +17,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       inProgress: false,
-      gameData: {
-        player1: ["test", 0, "test"]
-      }
+      gameData: {}
     };
   }
 
@@ -33,9 +31,23 @@ class App extends Component {
     this.setState({ gameData });
   }
 
-  // updateScore =  => {
+  // Passed as a callback to allow gameData object to be updated
+  // reflecting score changes
+  //  - player: player ID (property)
+  //  - dir: bool (true: up, false: down)
+  updateScore = (player, dir) => {
+    let gameData = {...this.state.gameData}
+    let score = gameData[`${player}`][1];
     
-  // }
+    if (dir) {
+      gameData[`${player}`][1] = score + 1;
+    }
+    else if (!dir && score !== 0) {
+      gameData[`${player}`][1] = score - 1;
+    }
+
+    this.setState({ gameData });
+  }
 
   changeAuthStatus = auth => {
     this.setState({ loggedIn: auth });
