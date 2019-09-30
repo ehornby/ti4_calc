@@ -5,6 +5,7 @@ import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
@@ -24,6 +25,7 @@ export default class New extends Component {
             selectingPlayers: false,
             numPlayers: 0,
             playerNames: [],
+            showComplete: false
         }
     }
 
@@ -88,6 +90,25 @@ export default class New extends Component {
     // Makes call to users table to save progress state
     saveProgressStatus() {
         // Not implemented yet
+    }
+
+    completeGame() { 
+        
+        return (
+            <Fragment>
+                <ButtonGroup>
+                    <Button variant="success">Complete Game</Button>
+                    <Button variant="danger">Cancel Game</Button>
+                </ButtonGroup>
+                <Modal show={this.state.showComplete}>
+                    <h1>Test</h1>
+                </Modal>
+            </Fragment>
+        );
+    }
+
+    closeComplete = event => {
+        this.setState({ showComplete: false });
     }
 
     // Renders the modal allowing player number selection and name entry
@@ -173,7 +194,6 @@ export default class New extends Component {
                     <tr>
                         <th>Player</th>
                         <th>Score</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -190,7 +210,8 @@ export default class New extends Component {
                 ?
                 <Fragment>
                     {this.gameInProgress()}
-                </Fragment>
+                    {this.completeGame()}
+                  </Fragment>
                 :
                 <Fragment>
                     {this.newGame()}

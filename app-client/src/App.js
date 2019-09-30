@@ -77,6 +77,8 @@ class App extends Component {
     }
   }
 
+  // Call a componentWillUnmount() to save gameData to DB 
+
   render() {
     const props = {
       changeAuthStatus: this.changeAuthStatus,
