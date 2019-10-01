@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import { API } from 'aws-amplify';
+import Players from '../components/Players';
+import Scores from '../components/Scores';
 
 export default class Results extends Component {
     constructor(props) {
@@ -32,6 +34,10 @@ export default class Results extends Component {
         return API.get("ti4", "/ti4");
     }
 
+    getPlayerData() {
+
+    }
+
     render() {
         return (
             <div>
@@ -39,26 +45,15 @@ export default class Results extends Component {
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Players</th>
                             <th>Winner</th>
-                            <th>Scores</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>test date</td>
-                            <td> 
-                                <Button 
-                                    variant="primary"
-                                    onClick={this.handleShow}
-                                >
-                                    Implement modal/popover
-                                </Button>
-                            </td>
+                            <td>Date</td>
                             <td>
-                                Test winner
+                                <Scores playerData={() => this.getPlayerData()}/>
                             </td>
-                            <td>Implement modal/popover</td>
                         </tr>
                     </tbody>
                 </Table>
