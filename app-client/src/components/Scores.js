@@ -16,8 +16,12 @@ const popover = (
     </Popover>
 );
 
+function generatePlayerTable() {
+
+}
+
 export default ({
-    playerData
+    data
 }) =>
     <OverlayTrigger 
         trigger="click" 

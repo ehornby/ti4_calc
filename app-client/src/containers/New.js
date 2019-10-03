@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import ModalTitle from 'react-bootstrap/ModalTitle';
@@ -25,7 +25,8 @@ export default class New extends Component {
             selectingPlayers: false,
             numPlayers: 0,
             playerNames: [],
-            showComplete: false
+            showComplete: false,
+            showCancel: false
         }
     }
 
@@ -92,23 +93,96 @@ export default class New extends Component {
         // Not implemented yet
     }
 
-    completeGame() { 
-        
+    handleComplete(flag) {
+        this.setState({ showComplete: flag })
+    }
+
+    handleCancel(flag) {
+        this.setState({ showCancel: flag })
+    }
+
+    completeGame() {
+        this.handleComplete(false);
+    }
+
+    // Clears gameData in state, sets inProgress flag to false, and
+    // redirects to lander page
+    cancelGame() {
+        this.props.clearGameData();
+        this.props.history.push("/home");
+    }
+
+    // Can refactor to eliminate two modals
+    endGame() {       
         return (
             <Fragment>
                 <ButtonGroup>
-                    <Button variant="success">Complete Game</Button>
-                    <Button variant="danger">Cancel Game</Button>
+                    <Button 
+                        variant="success"
+                        onClick={() => this.handleComplete(true)}
+                    >
+                        Complete Game
+                    </Button>
+                    <Button 
+                        variant="danger"
+                        onClick={() => this.handleCancel(true)}
+                    >
+                        Cancel Game
+                    </Button>
                 </ButtonGroup>
-                <Modal show={this.state.showComplete}>
-                    <h1>Test</h1>
+
+                <Modal
+                    show={this.state.showComplete}
+                    onHide={() => this.handleComplete(false)}
+                >
+                    <ModalHeader>
+                        <ModalTitle>Complete Game</ModalTitle>
+                    </ModalHeader>
+                    <ModalBody>
+                        Are you sure you want to complete the game?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button 
+                            variant="outline-success"
+                            onClick={this.completeGame}
+                        >
+                            Yes
+                        </Button>
+                        <Button
+                            variant="outline-danger"
+                            onClick={() => this.handleComplete(false)}
+                        >
+                            No
+                        </Button>
+                    </ModalFooter>
+                </Modal>
+                <Modal
+                    show={this.state.showCancel}
+                    onHide={() => this.handleCancel(false)}
+                >
+                    <ModalHeader>
+                        <ModalTitle>Cancel Game</ModalTitle>
+                    </ModalHeader>
+                    <ModalBody>
+                        Are you sure you want to cancel the game and delete all saved data?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button 
+                            variant="outline-success"
+                            onClick={this.cancelGame}
+                        >
+                            Yes
+                        </Button>
+                        <Button
+                            variant="outline-danger"
+                            onClick={() => this.handleCancel(false)}
+                        >
+                            No
+                        </Button>
+                    </ModalFooter>
                 </Modal>
             </Fragment>
         );
-    }
-
-    closeComplete = event => {
-        this.setState({ showComplete: false });
     }
 
     // Renders the modal allowing player number selection and name entry
@@ -210,7 +284,7 @@ export default class New extends Component {
                 ?
                 <Fragment>
                     {this.gameInProgress()}
-                    {this.completeGame()}
+                    {this.endGame()}
                   </Fragment>
                 :
                 <Fragment>

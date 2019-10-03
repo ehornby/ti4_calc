@@ -31,6 +31,11 @@ class App extends Component {
     this.setState({ gameData });
   }
 
+  clearGameData() {
+    this.setState({ gameData: {} })
+    this.setState({ inProgress: false })
+  }
+
   // Passed as a callback to allow gameData object to be updated
   // reflecting score changes
   //  - player: player ID (property)
@@ -87,7 +92,8 @@ class App extends Component {
       changeProgressStatus: this.changeProgressStatus,
       gameData: this.state.gameData,
       createGameData: this.createGameData,
-      updateScore: this.updateScore
+      updateScore: this.updateScore,
+      clearGameData: this.clearGameData
     }
 
     return (

@@ -1,6 +1,9 @@
 import uuid from 'uuid';
 import * as dynamoDbLib from './libs/dynamodb-lib';
 import { success, failure } from './libs/response-lib';
+import moment from 'moment';
+
+// Look at switching out moment for Intl.DateTimeFormat
 
 export async function main(event, context) {
     const data = JSON.parse(event.body);
@@ -11,7 +14,7 @@ export async function main(event, context) {
             userId: event.requestContext.identity.cognitoIdentityId,
             gameId: uuid.v1(),
             gameData: data.content,
-            createdAt: Date.now()
+            createdAt: moment().format('MMM Do YYYY')
         }
     };
 
