@@ -6,7 +6,7 @@ import NavbarBrand from 'react-bootstrap/NavbarBrand';
 import Nav from 'react-bootstrap/Nav';
 import NavbarCollapse from 'react-bootstrap/NavbarCollapse';
 import NavLink from 'react-bootstrap/NavLink';
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter } from 'react-router-dom';
  
@@ -31,9 +31,9 @@ class App extends Component {
     this.setState({ gameData });
   }
 
-  clearGameData() {
-    this.setState({ gameData: {} })
-    this.setState({ inProgress: false })
+  clearGameData = () => {
+    this.setState({ gameData: {} });
+    this.setState({ inProgress: false });
   }
 
   // Passed as a callback to allow gameData object to be updated
@@ -82,6 +82,28 @@ class App extends Component {
     }
   }
 
+  // Saves game log to DB, clears game data from state, and 
+  // redirects to lander page
+
+  completeGame = async event => {
+    event.preventDefault();
+
+    try {
+      this.saveGameData(this.state.gameData);
+      this.setState({ gameData: {} });
+      this.props.history.push("/home");
+    }
+    catch (e) {
+      alert(e);
+    }
+  }
+
+  saveGameData(game) {
+    return API.post("ti4", "/ti4", {
+      body: game
+    });
+  }
+
   // Call a componentWillUnmount() to save gameData to DB 
 
   render() {
@@ -93,7 +115,8 @@ class App extends Component {
       gameData: this.state.gameData,
       createGameData: this.createGameData,
       updateScore: this.updateScore,
-      clearGameData: this.clearGameData
+      clearGameData: this.clearGameData,
+      completeGame: this.completeGame
     }
 
     return (

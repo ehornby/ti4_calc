@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, { Component, Fragment } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import ModalTitle from 'react-bootstrap/ModalTitle';
@@ -93,39 +93,34 @@ export default class New extends Component {
         // Not implemented yet
     }
 
-    handleComplete(flag) {
-        this.setState({ showComplete: flag })
+    handleCompleteGame = (flag) => {
+        this.setState({ showComplete: flag });
     }
 
-    handleCancel(flag) {
-        this.setState({ showCancel: flag })
+    handleCancelGame = (flag) => {
+        this.setState({ showCancel: flag });
     }
 
-    completeGame() {
-        this.handleComplete(false);
-    }
-
-    // Clears gameData in state, sets inProgress flag to false, and
-    // redirects to lander page
-    cancelGame() {
+    cancelGame = () => {
         this.props.clearGameData();
-        this.props.history.push("/home");
+        this.setState({ showCancel: false });
+        this.props.history.push("/");
     }
 
     // Can refactor to eliminate two modals
-    endGame() {       
+    endGame = () => {       
         return (
-            <Fragment>
+            <div>
                 <ButtonGroup>
                     <Button 
                         variant="success"
-                        onClick={() => this.handleComplete(true)}
+                        onClick={() => this.handleCompleteGame(true)}
                     >
                         Complete Game
                     </Button>
                     <Button 
                         variant="danger"
-                        onClick={() => this.handleCancel(true)}
+                        onClick={() => this.handleCancelGame(true)}
                     >
                         Cancel Game
                     </Button>
@@ -133,7 +128,7 @@ export default class New extends Component {
 
                 <Modal
                     show={this.state.showComplete}
-                    onHide={() => this.handleComplete(false)}
+                    onHide={() => this.handleCompleteGame(false)}
                 >
                     <ModalHeader>
                         <ModalTitle>Complete Game</ModalTitle>
@@ -144,13 +139,13 @@ export default class New extends Component {
                     <ModalFooter>
                         <Button 
                             variant="outline-success"
-                            onClick={this.completeGame}
+                            onClick={this.props.completeGame}
                         >
                             Yes
                         </Button>
                         <Button
                             variant="outline-danger"
-                            onClick={() => this.handleComplete(false)}
+                            onClick={() => this.handleCompleteGame(false)}
                         >
                             No
                         </Button>
@@ -158,7 +153,7 @@ export default class New extends Component {
                 </Modal>
                 <Modal
                     show={this.state.showCancel}
-                    onHide={() => this.handleCancel(false)}
+                    onHide={() => this.handleCancelGame(false)}
                 >
                     <ModalHeader>
                         <ModalTitle>Cancel Game</ModalTitle>
@@ -175,13 +170,13 @@ export default class New extends Component {
                         </Button>
                         <Button
                             variant="outline-danger"
-                            onClick={() => this.handleCancel(false)}
+                            onClick={() => this.handleCancelGame(false)}
                         >
                             No
                         </Button>
                     </ModalFooter>
                 </Modal>
-            </Fragment>
+            </div>
         );
     }
 

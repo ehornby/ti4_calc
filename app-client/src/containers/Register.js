@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import FormText from 'react-bootstrap/FormText';
 import { Auth } from 'aws-amplify';
 import './Register.css';
 
@@ -45,6 +46,20 @@ export default class Register extends Component {
     }
 
     handleConfirmSubmit = async event => {
+        event.preventDefault();
+        this.setState({ isLoading: true });
+
+        try {
+            await Auth.confirmSignUp(this.state.email, this.state.code);
+            await Auth.signIn(this.state.email, this.state.password);
+
+            this.props.changeAuthStatus(true);
+            this.props.history.push("/");
+        }
+        catch (e) {
+            alert(e.message);
+            this.setState({ isLoading: false });
+        }
 
     }
 
@@ -88,7 +103,26 @@ export default class Register extends Component {
     }
 
     renderConfirmForm() {
-
+        return (
+            <form onSubmit={this.handleConfirmationSubmit}>
+                <FormGroup controlId="confirmationCode">
+                    <FormControl
+                        autoFocus
+                        type="tel"
+                        placeholder="Confirmation code"
+                        value={this.state.code}
+                        onChange={this.handleChange}
+                    />
+                    <FormText>Please check your email for the code.</FormText>
+                </FormGroup>
+                <Button
+                    variant="primary"
+                    type="submit"
+                >
+                    Confirm
+                </Button>
+            </form>
+        );
     }
 
     render() {

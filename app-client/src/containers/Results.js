@@ -6,7 +6,11 @@ import Scores from '../components/Scores';
 const testData = [
     {
         createdAt: "test1",
-        gameData: {},
+        gameData: {
+            player1: ["eric", "6", "race"],
+            player2: ["cardwell", "9", "race"],
+            player3: ["jordan", "10", "race"]
+        },
         gameId: "test1",
         userId: "user1"
     },
@@ -69,7 +73,9 @@ export default class Results extends Component {
                     <td>
                         {date}
                     </td>
-                    <td><Scores data={game.gameData}/></td>
+                    <td>
+                        <Scores data={game.gameData}/>
+                    </td>
                 </tr>
             )
         }
