@@ -2,32 +2,33 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import { API } from 'aws-amplify';
 import Scores from '../components/Scores';
+import './Results.css';
 
-const testData = [
-    {
-        createdAt: "test1",
-        gameData: {
-            player1: ["eric", "6", "race"],
-            player2: ["cardwell", "9", "race"],
-            player3: ["jordan", "10", "race"]
-        },
-        gameId: "test1",
-        userId: "user1"
-    },
-    {
-        createdAt: "test2",
-        gameData: {},
-        gameId: "test2",
-        userId: "user2"
-    }
-]
+// const testData = [
+//     {
+//         createdAt: "test1",
+//         gameData: {
+//             player1: ["eric", "6", "race"],
+//             player2: ["cardwell", "9", "race"],
+//             player3: ["jordan", "10", "race"]
+//         },
+//         gameId: "test1",
+//         userId: "user1"
+//     },
+//     {
+//         createdAt: "test2",
+//         gameData: {},
+//         gameId: "test2",
+//         userId: "user2"
+//     }
+// ]
 
 export default class Results extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            resultsData: testData
+            resultsData: []
         }
     }
 
@@ -58,10 +59,6 @@ export default class Results extends Component {
         return API.get("ti4", "/ti4");
     }
 
-    getPlayerData() {
-
-    }
-
     generateResultsTable() {
         var resultsData = this.state.resultsData
         var results = [];
@@ -85,7 +82,9 @@ export default class Results extends Component {
     render() {
         return (
             <div>
-                <Table>
+                <Table
+                    striped
+                >
                     <thead>
                         <tr>
                             <th>Date</th>

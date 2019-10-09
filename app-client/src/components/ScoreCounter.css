@@ -1,11 +1,11 @@
-.player-table {
-    margin: 15px 0 0 0;
-}
-
 .score-up {
     background-color: green;
 }
 
 .score-down {
     background-color: red;
+}
+
+.score-counter {
+    background-color: #BDCEE8;
 }

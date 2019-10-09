@@ -125,13 +125,14 @@ export default class Register extends Component {
         );
     }
 
+    // Check to make sure confirmation works properly 
     render() {
         return(
             <div className="Signup">
                 {this.state.newUser === null
                 ? this.renderForm()
                 :
-                this.renderConfirmation()
+                this.renderConfirmForm()
                 }
             </div>
         );

@@ -125,7 +125,7 @@ class App extends Component {
           bg="light"
           collapseOnSelect
         >
-          <NavbarBrand href="/">TI4</NavbarBrand>
+          <NavbarBrand href="/">TI4 Scorekeeper</NavbarBrand>
             <NavbarCollapse className = "justify-content-end">
               {!this.state.loggedIn
               ?

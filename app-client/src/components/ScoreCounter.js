@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
-import InputGroup, { InputGroupPrepend, InputGroupAppend } from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
-import FormControl from 'react-bootstrap/FormControl';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import './ScoreCounter.css';
 
 export default ({
     score,
     updateScore,
     playerId
 }) =>
-    <Fragment>
-        <Button onClick={() => updateScore(playerId, false)}>-</Button>
-        <h1>{score}</h1>
-        <Button onClick={() => updateScore(playerId, true)}>+</Button>
-    </Fragment>;
+    <ButtonGroup>
+        <Button className="score-down" variant="outline-dark" onClick={() => updateScore(playerId, false)}>-</Button>
+        <Button className="score-counter" variant="outline-dark">{score}</Button>
+        <Button className="score-up" variant="outline-dark" onClick={() => updateScore(playerId, true)}>+</Button>
+    </ButtonGroup>;

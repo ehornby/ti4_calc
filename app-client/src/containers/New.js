@@ -15,6 +15,7 @@ import FormGroup from 'react-bootstrap/FormGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Table from 'react-bootstrap/Table';
 import ScoreCounter from '../components/ScoreCounter';
+import './New.css';
 
 export default class New extends Component {
     constructor(props) {
@@ -41,7 +42,7 @@ export default class New extends Component {
     // - Implement DB call to users table on new game start, to set 
     //   inProgress flag that gets referenced 
     // - Add functionality to prevent form submit if any fields are empty
-    handleStart = event =>{
+    handleStart = () =>{
         this.props.changeProgressStatus(true);
 
         const numPlayers = this.state.numPlayers;
