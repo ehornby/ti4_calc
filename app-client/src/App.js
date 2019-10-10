@@ -122,11 +122,12 @@ class App extends Component {
     return (
       <div>
         <Navbar 
-          bg="light"
+          // bg="light"
+          className="top-navbar"
           collapseOnSelect
         >
           <NavbarBrand href="/">TI4 Scorekeeper</NavbarBrand>
-            <NavbarCollapse className = "justify-content-end">
+            <NavbarCollapse className="justify-content-end">
               {!this.state.loggedIn
               ?
               <Fragment>     

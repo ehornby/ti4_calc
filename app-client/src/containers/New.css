@@ -1,11 +1,15 @@
+.Modal {
+    background-color: blue;
+}
 .player-table {
     margin: 15px 0 0 0;
 }
 
-.score-up {
-    background-color: green;
+.player-dropdown {
+    background-color: #6b5b95;
 }
 
-.score-down {
-    background-color: red;
+.cancel-complete {
+    margin: auto;
 }
+

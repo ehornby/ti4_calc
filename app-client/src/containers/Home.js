@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import './Home.css';
+import Splash from './splash.jpg';
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-    
-        };
     }
 
     render() {
         return (
-            <h1>Put a logo or something here</h1>
+            <div className="splash">
+                <img src={Splash}/>
+            </div>
         );
     }
 }

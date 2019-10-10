@@ -112,7 +112,7 @@ export default class New extends Component {
     endGame = () => {       
         return (
             <div>
-                <ButtonGroup>
+                <ButtonGroup className="cancel-complete">
                     <Button 
                         variant="success"
                         onClick={() => this.handleCompleteGame(true)}
@@ -187,7 +187,6 @@ export default class New extends Component {
             <div className="New">
                 <Modal 
                     show={!this.props.inProgress} 
-                    className="player-dropdown"
                 >
                     <ModalHeader>
                         <ModalTitle>Start new game</ModalTitle>
@@ -253,6 +252,7 @@ export default class New extends Component {
                 </tr>
             );
         }
+        players.push(this.endGame());
         return players;
     }
 
@@ -280,7 +280,6 @@ export default class New extends Component {
                 ?
                 <Fragment>
                     {this.gameInProgress()}
-                    {this.endGame()}
                   </Fragment>
                 :
                 <Fragment>

@@ -1,4 +1,7 @@
-/* body {
-    background-image: url("../src/splash.jpg");
-    background-repeat: repeat-x;
-} */
+body {
+    background-color: #a2b9bc;
+}
+
+.top-navbar {
+    background-color: #878f99;
+}

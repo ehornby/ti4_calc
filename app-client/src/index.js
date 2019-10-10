@@ -16,7 +16,13 @@ Amplify.configure({
         userPoolWebClientId: config.cognito.APP_CLIENT_ID
     },
     API: {
-
+        endpoints: [
+            {
+                name: "ti4",
+                endpoint: config.apiGateway.URL,
+                regions: config.apiGateway.REGION
+            },
+        ]
     }
 })
 
