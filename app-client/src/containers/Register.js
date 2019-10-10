@@ -65,7 +65,7 @@ export default class Register extends Component {
 
     renderForm() {
         return (
-            <div className = "Register">
+            <div className="Register">
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email">
                         <FormControl
@@ -104,24 +104,26 @@ export default class Register extends Component {
 
     renderConfirmForm() {
         return (
-            <form onSubmit={this.handleConfirmationSubmit}>
-                <FormGroup controlId="confirmationCode">
-                    <FormControl
-                        autoFocus
-                        type="tel"
-                        placeholder="Confirmation code"
-                        value={this.state.code}
-                        onChange={this.handleChange}
-                    />
-                    <FormText>Please check your email for the code.</FormText>
-                </FormGroup>
-                <Button
-                    variant="primary"
-                    type="submit"
-                >
-                    Confirm
-                </Button>
-            </form>
+            <div className="Register">
+                <Form onSubmit={this.handleConfirmationSubmit}>
+                    <FormGroup controlId="confirmationCode">
+                        <FormControl
+                            autoFocus
+                            type="tel"
+                            placeholder="Confirmation code"
+                            value={this.state.code}
+                            onChange={this.handleChange}
+                        />
+                        <FormText>Please check your email for the code.</FormText>
+                    </FormGroup>
+                    <Button
+                        variant="primary"
+                        type="submit"
+                    >
+                        Confirm
+                    </Button>
+                </Form>
+            </div>
         );
     }
 
