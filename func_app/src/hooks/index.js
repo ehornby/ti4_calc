@@ -1,19 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { firebase } from '../firebase';
 
-export const CheckInProgress = () => {
+export const useProgress = () => {
+    const [gameInProgress, setGameInProgress] = useState(false)
 
-    return (
-        useEffect(() => {
-            let userData = firebase
+    useEffect(() => {
+        firebase
             .firestore()
             .collection('games')
             .where('userId', '==', 'testID1234')
-            .where('inProgress', '==', true); 
-            
-            return  (
-                userData.length !== 0
-            );            
-        }, [])
-    );
+            .where('inProgress', '==', true)
+            .get()
+            .then(snapshot => {
+                const userData = snapshot.docs.map(item => ({
+                    ...item.data(),
+                }));
+
+                if (userData.length > 0) {
+                    setGameInProgress(true);
+                }
+            })            
+
+    }, [])
+
+    return { gameInProgress, setGameInProgress };
 }
+

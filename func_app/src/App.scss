@@ -149,7 +149,7 @@ header {
 
     nav {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr;
         align-items: center;
         margin: auto;
@@ -171,10 +171,12 @@ header {
         }
         &.links {
             text-align: right;
-            grid-area: 1/2;
+            grid-column: 3/4;
         }
-        .welcome {
+        &.welcome {
             @include no-select();
+            grid-column: 2/3;
+            text-align: center;
         }
         .settings:hover {
             transform: scale(1.4);
@@ -213,15 +215,9 @@ header {
 
 }
 
-/* Main Content
+/* Splash
 =================================================== */
-.content {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    max-width: 922px;
-    margin: auto;
+.splash {
+    text-align: center;
+    padding-top: 100px;    
 }
-
-/* Game
-=================================================== */

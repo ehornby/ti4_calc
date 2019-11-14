@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { CheckInProgress } from '../../hooks';
-
+import React, { useState, useEffect } from 'react';
+import { useUserValue, useProgressValue } from '../../context';
 
 export const Sidebar = () => {
-    const inProgressState = CheckInProgress();
-
-    const [gameInProgress, setGameInProgress] = useState(inProgressState);
+    const { loggedIn, setLoggedIn } = useUserValue();
+    const { gameInProgress, setGameInProgress } = useProgressValue();
     const [showCancel, setShowCancel] = useState(false);
     const [showNewGame, setShowNewGame] = useState(false);
 
