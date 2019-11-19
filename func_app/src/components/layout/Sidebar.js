@@ -1,10 +1,10 @@
 /*
-    TODO    - fix re-rendering when game is cancelled
-            - directly implement checking of game in progress
+    TODO   
+    - directly implement checking of game in progress
 */
 
 import React, { useState } from 'react';
-import { useUserValue, useProgressValue } from '../../context';
+import { useProgressValue } from '../../context';
 import 
 { Modal, 
 ModalTitle,
@@ -13,7 +13,7 @@ ModalFooter,
 } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import { Button } from 'react-bootstrap';
-import { deleteActiveGame } from '../../helpers';
+import { deleteActiveGame, saveNewGame } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
 import { useGameDataValue } from '../../context';
@@ -27,9 +27,10 @@ export const Sidebar = () => {
     // Handles cancelling an in-progress game and deleting the DB record
 
     const handleCancel = () => {
-        deleteActiveGame();
         setShowCancel(false);
         setGameInProgress(false);
+        setGameData( {} );
+        deleteActiveGame();
     }
 
     // Handles closing the new game modal and clears gameData
@@ -37,6 +38,14 @@ export const Sidebar = () => {
     const handleCloseNewGame = () => {
         setShowNewGame(false);
         setGameData( {} );
+    }
+
+    // Handles starting a new game
+
+    const handleStartGame = () => {
+        setShowNewGame(false);
+        setGameInProgress(true);
+        saveNewGame(gameData, 'testID1234');
     }
 
     return (
@@ -116,8 +125,24 @@ export const Sidebar = () => {
             <ModalBody>
                 Select number of players:
             </ModalBody>
+            <div className='show-new-game__num'>
                 <NumOfPlayers /> 
+            </div>
+            <div className='show-new-game__input'>
                 <PlayerInput />               
+            </div>
+                <ModalFooter>
+                    <Button
+                        onClick={handleCloseNewGame}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleStartGame}
+                    >
+                        Start game!
+                    </Button>
+                </ModalFooter>
             </Modal>
         </div>
         </>

@@ -20,6 +20,23 @@ export const deleteActiveGame = () => {
 }
 
 /*
+    @param gameData: object representing initial game state
+    @param userId: userId of logged in user
+*/
+
+export const saveNewGame = (gameData, userId) => {
+    firebase
+        .firestore()
+        .collection('games')
+        .add({
+            gameData: gameData,
+            userId: userId,
+            inProgress: true
+        });
+}      
+
+
+/*
     Queries Firestore and returns a user data object
 */
 

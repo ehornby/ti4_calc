@@ -13,9 +13,13 @@ export const NumOfPlayers = () => {
 
     const createGameDataTemplate = (eventKey) => {
         let tempData = {};
-        tempData[0] = eventKey;
+        tempData['numPlayers'] = eventKey;
         for (let i = 1; i <= eventKey; i++) {
-            tempData[i] = ["", 0, ""]
+            tempData[`player${i}`] = {
+                name: "",
+                score: 0,
+                race: ""
+            }
         }
         setGameData(tempData);
     }

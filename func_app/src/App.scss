@@ -201,10 +201,11 @@ header {
     padding-left: 4px;
 
     &__generic {
+        padding-top: 8px;
         padding-left: 4px;
         
         li {
-            padding: 8px 0;
+            padding: 10px 0;
 
             &:hover {
                 font-weight: bold;
@@ -213,9 +214,18 @@ header {
             }
         }
     }
-    
-
 }
+
+/* Content
+=================================================== */
+.content {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    max-width: 100%;
+    margin: auto;
+}
+
 
 /* Splash
 =================================================== */
@@ -224,18 +234,12 @@ header {
     padding-top: 100px;    
 }
 
-/* New Game
+/* Game
 =================================================== */
-.new-game {
-    @include box-overlay();
-    background-color: white;
-
-    @include mq('900px') {
-        width: 200px;
-        right: 0px;
-    }
-
-    &__setup {
-        
-    }
+.game {
+    margin-left: 140px;
+    min-height: calc(100vh);
+    vertical-align: top;
+    padding-left: 40px;
+    padding-top: 80px;    
 }

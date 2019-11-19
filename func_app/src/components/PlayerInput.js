@@ -4,11 +4,11 @@ import { FormControl, FormGroup } from 'react-bootstrap';
 
 export const PlayerInput = () => {
     const { gameData, setGameData } = useGameDataValue();
-    let numPlayers = gameData[0];
+    let numPlayers = gameData.numPlayers;
 
     const handleChange = (num, val) => {
         const tempData = {...gameData}
-        tempData[num][0] = val;
+        tempData[`player${num}`].name = val;
         setGameData(tempData);        
     }
 
@@ -23,7 +23,7 @@ export const PlayerInput = () => {
                     type='text' 
                     required
                     placeholder={`Player ${num}`}
-                    value={gameData[num][0]}
+                    value={gameData[`player${num}`][0]}
                     onChange={(e) => handleChange(num, e.target.value)} 
                 />
             </FormGroup>
