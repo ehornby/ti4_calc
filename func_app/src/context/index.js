@@ -9,11 +9,20 @@ import {
     useProgressValue
 } from './progress-context'
 
+import { 
+    GameDataContext,
+    GameDataProvider,
+    useGameDataValue
+ } from './gamedata-context';
+
 export {
     UserContext,
     UserProvider,
     useUserValue,
     ProgressContext,
     ProgressProvider,
-    useProgressValue
+    useProgressValue,
+    GameDataContext,
+    GameDataProvider,
+    useGameDataValue
 }

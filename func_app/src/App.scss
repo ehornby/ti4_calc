@@ -42,7 +42,8 @@ $generic-bg: #e0e0e0;
     position: absolute;
     width: 100%;
     z-index: 1;
-    top: 85px;
+    top: 300px;
+    left: 50%;
     border-radius: 3px;
 }
 
@@ -212,6 +213,7 @@ header {
             }
         }
     }
+    
 
 }
 
@@ -220,4 +222,20 @@ header {
 .splash {
     text-align: center;
     padding-top: 100px;    
+}
+
+/* New Game
+=================================================== */
+.new-game {
+    @include box-overlay();
+    background-color: white;
+
+    @include mq('900px') {
+        width: 200px;
+        right: 0px;
+    }
+
+    &__setup {
+        
+    }
 }

@@ -4,7 +4,7 @@ import { GoGear } from 'react-icons/go';
 import { useUserValue } from '../../context';
 
 export const Header = () => {
-    const { loggedIn } = useUserValue();
+    const { loggedIn, setLoggedIn } = useUserValue();
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
@@ -25,14 +25,25 @@ export const Header = () => {
                     <span className='welcome'>Welcome, $username!</span>
                 </div>
                 <div className='links'>
-                    <span className='logout'>Log Out</span>
+                    <span 
+                        className='logout'
+                        onClick={() => setLoggedIn(false)}
+                    >
+                        Log Out
+                    </span>
                     <span className='settings'><GoGear /></span>
                 </div>
                 </>
                 :
                 <>
                 <div className='links'>
-                    <span className='login'>Login</span>
+                    <span 
+                        className='login'
+                        onClick={() => setLoggedIn(true)
+                        }
+                    >
+                        Login
+                    </span>
                     <span className='register'>Register</span>
                 </div>
                 </>
