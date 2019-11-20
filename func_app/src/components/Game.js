@@ -2,32 +2,59 @@
     TODO
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useGameDataValue, useProgressValue } from '../context';
+import { Table } from 'react-bootstrap';
+import ScoreCounter from './ScoreCounter';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
     const { gameInProgress, setGameInProgress } = useProgressValue();
 
+    const updateScore = (id, inc) => {
+        let tempData = {...gameData};
+        tempData[`player${id}`].score += inc;
+        setGameData(tempData);
+    }
+
     const generatePlayerTable = () => {
         let players = [];
-        let numPlayers = gameData[0];
+        let numPlayers = gameData.numPlayers;
 
         for (let i = 1; i <= numPlayers; i++) {
             players.push (
-                <h1>{gameData[`player${i}`][0]}</h1>
-            )
+                <tr>
+                    <td>{gameData[`player${i}`].name}</td>
+                    <td>
+                        <ScoreCounter 
+                            score={gameData[`player${i}`].score}
+                            updateScore={updateScore}
+                            playerId={i}
+                        />
+                    </td>
+                    <td>{gameData[`player${i}`].race}</td>
+                </tr>
+
+            );
         }
         return players;
     }
 
     return (
         <div className='game'>
-        {gameInProgress &&
-        <>
-        {() => generatePlayerTable}
-        </>
-        }
+            {gameInProgress &&
+            <Table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Race</th>
+                </tr>
+            </thead>
+                <tbody>
+                    {generatePlayerTable()}
+                </tbody>
+            </Table>}
         </div>
-        )
+    );
 }
