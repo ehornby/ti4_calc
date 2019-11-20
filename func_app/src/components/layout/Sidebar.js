@@ -123,14 +123,13 @@ export const Sidebar = () => {
                 <ModalTitle>Start new game</ModalTitle>
             </ModalHeader>
             <ModalBody>
-                Select number of players:
+                <div className='show-new-game__num'>
+                    <NumOfPlayers /> 
+                </div>
+                <div className='show-new-game__input'>
+                    <PlayerInput />               
+                </div>
             </ModalBody>
-            <div className='show-new-game__num'>
-                <NumOfPlayers /> 
-            </div>
-            <div className='show-new-game__input'>
-                <PlayerInput />               
-            </div>
                 <ModalFooter>
                     <Button
                         onClick={handleCloseNewGame}

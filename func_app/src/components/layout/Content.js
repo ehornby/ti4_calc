@@ -6,7 +6,6 @@ import { useUserValue, useProgressValue } from '../../context';
 
 export const Content = () => {
     const { loggedIn, setLoggedIn } = useUserValue();
-    const { gameInProgress, setGameInProgress } = useProgressValue();
     
     return (
         <section className='content'>

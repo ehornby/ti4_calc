@@ -1,32 +1,74 @@
 import React from 'react';
 import { useGameDataValue } from '../context';
-import { FormControl, FormGroup } from 'react-bootstrap';
+import { FormControl, FormGroup, DropdownButton } from 'react-bootstrap';
+import { races } from '../constants';
+import DropdownItem from 'react-bootstrap/DropdownItem';
 
 export const PlayerInput = () => {
     const { gameData, setGameData } = useGameDataValue();
     let numPlayers = gameData.numPlayers;
 
-    const handleChange = (num, val) => {
+    const handleNameInput = (num, val) => {
         const tempData = {...gameData}
         tempData[`player${num}`].name = val;
         setGameData(tempData);        
     }
 
+    const handleRaceInput = (index, num) => {
+        const tempData = {...gameData}
+        tempData[`player${num}`].race = races[index]
+        setGameData(tempData);
+    }
+
+    const createRaceDropdown = player => {
+        let raceChoices = [];
+        for (let i = 0; i < races.length; i++) {
+            raceChoices.push(
+                <DropdownItem
+                    eventKey={i}
+                    onSelect={(e) => handleRaceInput(e, player)}
+                >
+                    {races[i]}
+                </DropdownItem>
+            )
+        }
+        return raceChoices;
+    }
+
     let players = [];
     for (let num = 1; num <= numPlayers; num++) {
         players.push(
-            <FormGroup
-                controlId={`player${num}`}
-                className='player-entry'
-            >
-                <FormControl 
-                    type='text' 
-                    required
-                    placeholder={`Player ${num}`}
-                    value={gameData[`player${num}`][0]}
-                    onChange={(e) => handleChange(num, e.target.value)} 
-                />
-            </FormGroup>
+            <div>
+            <span>
+                <FormGroup
+                    controlId={`player${num}`}
+                    className='player-entry'
+                >
+                    <FormControl 
+                        type='text' 
+                        required
+                        placeholder={`Player ${num}`}
+                        value={gameData[`player${num}`][0]}
+                        onChange={(e) => handleNameInput(num, e.target.value)} 
+                    />
+                </FormGroup>
+            </span>
+            <span>
+                <DropdownButton
+                    title={
+                        gameData[`player${num}`].race == "" 
+                        || 
+                        gameData[`player${num}`].race == undefined
+                        ?
+                        `Player ${num} race`
+                        :
+                        gameData[`player${num}`].race
+                        }
+                    >
+                    {createRaceDropdown(num)}
+                </DropdownButton>
+            </span>
+            </div>
         );
     }
 

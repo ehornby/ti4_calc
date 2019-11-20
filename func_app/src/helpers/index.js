@@ -12,8 +12,8 @@ export const deleteActiveGame = () => {
         .where('userId', '==', 'testID1234')
         .where('inProgress', '==', true)
         .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
                 doc.ref.delete();
             })
         });   

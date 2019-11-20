@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
-import DropdownToggle from 'react-bootstrap/DropdownToggle';
-import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import React from 'react';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { useGameDataValue } from '../context';
 
 export const NumOfPlayers = () => {
@@ -35,13 +33,17 @@ export const NumOfPlayers = () => {
         );
     }
     return (
-        <Dropdown>
-            <DropdownToggle>
-                <DropdownMenu>
-                    {players}
-                </DropdownMenu>
-            </DropdownToggle>
-        </Dropdown>    
+        <DropdownButton
+            title={
+                (gameData.numPlayers == 0 || gameData.numPlayers == undefined)
+                ?
+                'Select number of players'
+                :
+                `${gameData.numPlayers} players`
+            }
+        >
+            {players}
+        </DropdownButton> 
     );
 }
 

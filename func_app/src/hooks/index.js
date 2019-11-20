@@ -35,8 +35,24 @@ export const useProgress = () => {
     return { gameInProgress, setGameInProgress };
 }
 
+/*
+    Initializes a gameData state object, queries Firebase for a currently 
+    in-progress game and updates state if that game exists
+*/
+
+
 export const useGameData = () => {
-    const [gameData, setGameData] = useState( {} );
+    const initialData = {
+        numPlayers: 0,
+    }
+    for (let i = 0; i <=5; i++) {
+        initialData[`player${i+1}`] = {
+            name: '',
+            score: 0,
+            race: ''
+        }
+    }
+    const [gameData, setGameData] = useState(initialData)
 
     useEffect(() => {
         firebase
@@ -46,16 +62,13 @@ export const useGameData = () => {
             .where('inProgress', '==', true)
             .get()
             .then(snapshot => {
-                const data = snapshot.docs.map(item => ({
-                    ...item.get('gameData')
-                }));
-
+                const data = snapshot.docs.map(item => (
+                    item.get('gameData')
+                ));
                 if (data.length > 0) {
                     setGameData(data[0]);
-                    console.log(data[0], 'hook');
                 }
-            })
-
-    }, []);
+            });
+        }, []);
     return { gameData, setGameData };
 }
