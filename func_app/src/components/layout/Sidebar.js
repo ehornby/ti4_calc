@@ -1,22 +1,16 @@
-/*
-    TODO   
-    - directly implement checking of game in progress
-*/
-
-import React, { useState } from 'react';
-import { useProgressValue } from '../../context';
+import React, { useState, useEffect } from 'react';
+import { useProgressValue, useGameDataValue } from '../../context';
 import 
 { Modal, 
 ModalTitle,
 ModalBody,
 ModalFooter,
+Button
 } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
-import { Button } from 'react-bootstrap';
 import { deleteActiveGame, saveNewGame } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
-import { useGameDataValue } from '../../context';
 
 export const Sidebar = () => {
     const { gameInProgress, setGameInProgress } = useProgressValue();
@@ -28,9 +22,9 @@ export const Sidebar = () => {
 
     const handleCancel = () => {
         setShowCancel(false);
-        setGameInProgress(false);
         setGameData( {} );
-        deleteActiveGame();
+        deleteActiveGame('testID1234');
+        setGameInProgress(false);
     }
 
     // Handles closing the new game modal and clears gameData
@@ -44,8 +38,8 @@ export const Sidebar = () => {
 
     const handleStartGame = () => {
         setShowNewGame(false);
-        setGameInProgress(true);
         saveNewGame(gameData, 'testID1234');
+        setGameInProgress(true);
     }
 
     return (
@@ -88,7 +82,7 @@ export const Sidebar = () => {
             Modal to cancel game in progress if one exists
         */}
 
-        <div className='cancel-game'>
+        <div className='show-cancel-game'>
             <Modal
                 show={showCancel}
                 onHide={() => setShowCancel(false)}

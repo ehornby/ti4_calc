@@ -7,25 +7,24 @@ export default ({
     updateScore,
     playerId
 }) => 
-    <ButtonGroup>
+    <ButtonGroup className='score-counter'>
         <Button 
-            className="score-down" 
+            className="score-counter__down" 
             variant="outline-dark" 
             onClick={() => updateScore(playerId, -1)}
         >
             -
         </Button>
         <Button 
-        className="score-counter" 
-        variant="outline-dark"
+            className="score-counter__display" 
+            variant="outline-dark"
         >
             {score}
         </Button>
         <Button 
-        className="score-up" 
-        variant="outline-dark" 
-        onClick={
-() => updateScore(playerId, 1)}
+            className="score-counter__up" 
+            variant="outline-dark" 
+            onClick={() => updateScore(playerId, 1)}
         >
             +
         </Button>

@@ -1,20 +1,45 @@
-/* 
-    TODO
-*/
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGameDataValue, useProgressValue } from '../context';
 import { Table } from 'react-bootstrap';
 import ScoreCounter from './ScoreCounter';
+import EndGame from './EndGame';
+import { deleteActiveGame, saveGameInProgress, getActiveGameId } from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
     const { gameInProgress, setGameInProgress } = useProgressValue();
+    const [activeGameId, setActiveGameId] = useState('');
 
     const updateScore = (id, inc) => {
         let tempData = {...gameData};
-        tempData[`player${id}`].score += inc;
-        setGameData(tempData);
+        let playerScore = tempData[`player${id}`].score;
+
+        if (inc > 0 || (inc < 0 && playerScore > 0)) {
+            tempData[`player${id}`].score += inc;  
+            setGameData(tempData);          
+        }
+    }
+    // Loads the active game ID if a game is currently in progress
+
+    useEffect(() => {
+        if (gameInProgress) {
+            getActiveGameId('testID1234', setActiveGameId);
+        }
+        else {
+            setActiveGameId('');
+        }
+    },[gameInProgress]);
+
+    const cancelGame = () => {
+        setGameData( {} );
+        deleteActiveGame('testID1234');
+        setGameInProgress(false);
+    }
+
+    const completeGame = () => {
+        saveGameInProgress(activeGameId, gameData);
+        setGameData( {} )
+        setGameInProgress(false);
     }
 
     const generatePlayerTable = () => {
@@ -43,6 +68,7 @@ export const Game = () => {
     return (
         <div className='game'>
             {gameInProgress &&
+            <>
             <Table>
             <thead>
                 <tr>
@@ -54,7 +80,13 @@ export const Game = () => {
                 <tbody>
                     {generatePlayerTable()}
                 </tbody>
-            </Table>}
+            </Table>
+            <EndGame 
+                cancelGame={cancelGame}
+                completeGame={completeGame}
+            />
+            </>
+            }
         </div>
     );
 }
