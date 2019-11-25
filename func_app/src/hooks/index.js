@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { firebase } from '../firebase';
-import { useUserValue, useProgressValue } from '../context';
+import { useUserValue } from '../context';
 
 /*
     Queries Firebase for all instances in 'games' where userId matches the logged in 
@@ -44,6 +44,7 @@ export const useProgress = () => {
 export const useGameData = () => {
     const initialData = {
         numPlayers: 0,
+        winner: '',
     }
     for (let i = 0; i <=5; i++) {
         initialData[`player${i+1}`] = {

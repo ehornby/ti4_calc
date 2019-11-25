@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgressValue, useGameDataValue } from '../../context';
 import 
 { Modal, 
@@ -12,7 +12,7 @@ import { deleteActiveGame, saveNewGame } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
 
-export const Sidebar = () => {
+export const Sidebar = ({ setDisplayGame }) => {
     const { gameInProgress, setGameInProgress } = useProgressValue();
     const { gameData, setGameData } = useGameDataValue();
     const [showCancel, setShowCancel] = useState(false);
@@ -40,6 +40,7 @@ export const Sidebar = () => {
         setShowNewGame(false);
         saveNewGame(gameData, 'testID1234');
         setGameInProgress(true);
+        setDisplayGame(true);
     }
 
     return (
@@ -64,6 +65,7 @@ export const Sidebar = () => {
                 <li
                     data-testid='continue-game'
                     className='continue-game'
+                    onClick={() => setDisplayGame(true)}
                 >
                     Continue Game
                 </li>
@@ -72,6 +74,7 @@ export const Sidebar = () => {
                 <li
                     data-testid='game-results'
                     className='game-results'
+                    onClick={() => setDisplayGame(false)}
                 >
                     Game History
                 </li>

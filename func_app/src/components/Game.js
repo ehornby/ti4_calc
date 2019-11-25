@@ -3,7 +3,7 @@ import { useGameDataValue, useProgressValue } from '../context';
 import { Table } from 'react-bootstrap';
 import ScoreCounter from './ScoreCounter';
 import EndGame from './EndGame';
-import { deleteActiveGame, saveGameInProgress, getActiveGameId } from '../helpers';
+import { deleteActiveGame, saveGameInProgress, getActiveGameId, setGameWinner } from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
@@ -37,7 +37,8 @@ export const Game = () => {
     }
 
     const completeGame = () => {
-        saveGameInProgress(activeGameId, gameData);
+        setGameWinner(gameData, setGameData);
+        saveGameInProgress(activeGameId, gameData, setGameData);
         setGameData( {} )
         setGameInProgress(false);
     }

@@ -1,4 +1,5 @@
 import { firebase } from '../firebase';
+import moment from 'moment';
 /*
     @param userId (string): userId of currently logged in user
 
@@ -34,7 +35,8 @@ export const saveNewGame = (gameData, userId) => {
         .add({
             gameData: gameData,
             userId: userId,
-            inProgress: true
+            inProgress: true,
+            dateTime: moment().format('MMM Do YYYY')
         });
 }
 
@@ -73,16 +75,18 @@ export const saveGameInProgress = (gameId, gameData) => {
         .doc(gameId)
         .set({
             gameData: gameData,
-            inProgress: false
+            inProgress: false,
         },
         { merge: true });
 }
 
-/*
-    Queries Firestore and returns a user data object
-*/
-
-export const getUserData = () => {
-
+export const setGameWinner = (gameData, setGameData) => {
+    for (let i = 0; i < gameData.numPlayers; i++) {
+        if (gameData[`player${i+1}`].score == 10) {
+            let tempData = {...gameData};
+            tempData.winner = gameData[`player${i+1}`].name;
+            setGameData(tempData);
+        }
+    }
+    return null;
 }
-

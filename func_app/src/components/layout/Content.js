@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Game } from '../Game';
+import { History } from '../History';
 import { Splash } from '../Splash';
-import { useUserValue, useProgressValue } from '../../context';
+import { useUserValue } from '../../context';
 
 export const Content = () => {
     const { loggedIn, setLoggedIn } = useUserValue();
+    const [displayGame, setDisplayGame] = useState(true);
     
     return (
         <section className='content'>
+        
             {loggedIn
             ?
             <>        
-                <Sidebar />
+                <Sidebar 
+                    setDisplayGame={setDisplayGame}
+                />
+                {displayGame 
+                ?
                 <Game />
+                :
+                <History />
+                }
             </>
             :
                 <Splash />
