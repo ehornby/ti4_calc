@@ -26,7 +26,7 @@ export const Content = () => {
                 }
             </>
             :
-                <Splash />
+            <Splash />
             }
         </section>
     );

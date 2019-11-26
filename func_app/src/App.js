@@ -4,6 +4,7 @@ import { Content } from './components/layout/Content';
 import { UserProvider, ProgressProvider, GameDataProvider } from './context';
 
 export const App = () => {
+
   return (
     <>
     <UserProvider>

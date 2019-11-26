@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useGameDataValue, useProgressValue } from '../context';
-import { Table } from 'react-bootstrap';
 import ScoreCounter from './ScoreCounter';
 import EndGame from './EndGame';
-import { deleteActiveGame, saveGameInProgress, getActiveGameId, setGameWinner } from '../helpers';
+import 
+{ Modal, 
+ModalTitle,
+ModalBody,
+ModalFooter,
+Button,
+Table
+} from 'react-bootstrap';
+import ModalHeader from 'react-bootstrap/ModalHeader';
+import 
+{ deleteActiveGame, 
+saveGameInProgress, 
+getActiveGameId, 
+setGameWinner } from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
     const { gameInProgress, setGameInProgress } = useProgressValue();
     const [activeGameId, setActiveGameId] = useState('');
+    const [showScoreConfirm, setShowScoreConfirm] = useState(false);
 
-    const updateScore = (id, inc) => {
-        let tempData = {...gameData};
-        let playerScore = tempData[`player${id}`].score;
-
-        if (inc > 0 || (inc < 0 && playerScore > 0)) {
-            tempData[`player${id}`].score += inc;  
-            setGameData(tempData);          
-        }
-    }
     // Loads the active game ID if a game is currently in progress
 
     useEffect(() => {
@@ -30,6 +34,16 @@ export const Game = () => {
         }
     },[gameInProgress]);
 
+    const updateScore = (id, inc) => {
+        let tempData = {...gameData};
+        let playerScore = tempData[`player${id}`].score;
+
+        if (inc > 0 || (inc < 0 && playerScore > 0)) {
+            tempData[`player${id}`].score += inc;  
+            setGameData(tempData);          
+        }
+    }
+
     const cancelGame = () => {
         setGameData( {} );
         deleteActiveGame('testID1234');
@@ -37,10 +51,28 @@ export const Game = () => {
     }
 
     const completeGame = () => {
+        setShowScoreConfirm(false);
         setGameWinner(gameData, setGameData);
         saveGameInProgress(activeGameId, gameData, setGameData);
         setGameData( {} )
         setGameInProgress(false);
+    }
+
+    // Checks to see if any player has achieved a score of ten points
+
+    const checkForWinner = () => {
+        let winnerFound = false;
+        const numPlayers = gameData.numPlayers;
+        for (let i = 0; i < numPlayers; i++) {
+            if (gameData[`player${i+1}`].score == 10) {
+                winnerFound = true;
+                break;
+            }
+        }
+        if (winnerFound) { completeGame(); }
+        else {
+            setShowScoreConfirm(true);
+        }
     }
 
     const generatePlayerTable = () => {
@@ -67,6 +99,7 @@ export const Game = () => {
     }
 
     return (
+        <>
         <div className='game'>
             {gameInProgress &&
             <>
@@ -84,10 +117,32 @@ export const Game = () => {
             </Table>
             <EndGame 
                 cancelGame={cancelGame}
-                completeGame={completeGame}
+                completeGame={checkForWinner}
             />
             </>
             }
         </div>
+        <div className='show-confirm-score'>
+            <Modal
+                show={showScoreConfirm}
+                onHide={() => setShowScoreConfirm(false)}
+            >
+                <ModalHeader>
+                    <ModalTitle>
+                        Warning!
+                    </ModalTitle>
+                </ModalHeader>
+                <ModalBody>No one has made it to 10 points - are you sure you wish to complete the game?</ModalBody>  
+                <ModalFooter>
+                    <Button onClick={() => setShowScoreConfirm(false)}>
+                        No, keep playing!
+                    </Button>
+                    <Button onClick={completeGame}>
+                        Yes,complete game!
+                    </Button>
+                </ModalFooter>
+            </Modal>
+        </div>
+        </>
     );
 }

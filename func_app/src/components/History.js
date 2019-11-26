@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from '../firebase';
 import { Table } from 'react-bootstrap';
-import moment from 'moment';
+import Summary from './Summary';
 
 export const History = () => {
     const [userHistory, setUserHistory] = useState([]);
@@ -36,7 +36,7 @@ export const History = () => {
             history.push(
                 <tr>
                     <td>{date}</td>
-                    <td>{item.winner}</td>
+                    <td><Summary gameData={gameData} /></td>
                 </tr>
             )
         });
@@ -49,7 +49,7 @@ export const History = () => {
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Winner</th>
+                        <th>Winner (Click for full results)</th>
                     </tr>
                 </thead>
                 <tbody>
