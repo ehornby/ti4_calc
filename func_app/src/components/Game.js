@@ -130,13 +130,13 @@ export const Game = () => {
                         Warning!
                     </ModalTitle>
                 </ModalHeader>
-                <ModalBody>No one has made it to 10 points - are you sure you wish to complete the game?</ModalBody>  
+                <ModalBody>No one has made it to 10 points - do you want to continue playing?</ModalBody>  
                 <ModalFooter>
-                    <Button onClick={() => setShowScoreConfirm(false)}>
-                        No, keep playing!
+                    <Button onClick={completeGame} variant='outline-danger'>
+                        No, end the game!
                     </Button>
-                    <Button onClick={completeGame}>
-                        Yes,complete game!
+                    <Button onClick={() => setShowScoreConfirm(false)} variant='outline-success'>
+                        Yes, keep playing!
                     </Button>
                 </ModalFooter>
             </Modal>

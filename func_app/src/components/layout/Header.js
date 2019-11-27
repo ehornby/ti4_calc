@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaHome } from 'react-icons/fa';
 import { GoGear } from 'react-icons/go';
 import { useUserValue } from '../../context';
 import 
@@ -79,9 +78,6 @@ export const Header = () => {
         <header className='Header' data-testid='header'>
             <nav>
                 <div className='home'>
-                    <span className='home-icon'>
-                        <FaHome />
-                    </span>
                     <span className='home-title'>TI4 Tracker</span>
                 </div>
                 {loggedIn 
@@ -153,15 +149,18 @@ export const Header = () => {
                 </ModalBody>
                 <ModalFooter>
                     <Button
-                        onClick={handleLogin}
-                    >
-                        Login
-                    </Button>
-                    <Button
                         onClick={() => setShowLogin(false)}
+                        variant='outline-danger'
                     >
                         Cancel
                     </Button>
+                    <Button
+                        onClick={handleLogin}
+                        variant='outline-success'
+                    >
+                        Login
+                    </Button>
+
                 </ModalFooter>
             </Modal>
         </div>
@@ -200,15 +199,18 @@ export const Header = () => {
                 </ModalBody>
                 <ModalFooter>
                     <Button
+                        onClick={() => setShowRegister(false)}
+                        variant='outline-danger'
+                    >
+                        Cancel
+                    </Button>                
+                    <Button
                         onClick={handleRegister}
+                        variant='outline-success'
                     >
                         Register
                     </Button>
-                    <Button
-                        onClick={() => setShowRegister(false)}
-                    >
-                        Cancel
-                    </Button>
+
                 </ModalFooter>
             </Modal>
         </div>
@@ -221,22 +223,38 @@ export const Header = () => {
                     <ModalTitle>Profile</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
-                    <Form>
-                        <FormGroup controlId='displayName'>
-                        <FormLabel>Change your display name</FormLabel>
+                    <div className='change-display-name'>
+                    <div className='name-entry'>
+                        <FormGroup 
+                            controlId='displayName'
+                        >
                             <FormControl
                                 type='text'
                                 placeholder='Enter new display name here'
                                 onChange={(e) => handleNameChange(e.target.value)}
                             />
                         </FormGroup>
+                    </div>
+                    <div className='name-confirm'>
                         <Button
                             onClick={() => changeUserSignInName(displayName)}
+                            className='name-confirm'
+                            variant='outline-primary'
                         >
-                            Test
+                            Change Name
                         </Button>
-                    </Form>
+                        </div>
+                    </div>
                 </ModalBody>
+                <ModalFooter>
+                    <Button
+                        className='close-profile'
+                        variant='outline-danger'
+                        onClick={() => setShowProfile(false)}
+                    >
+                        Close Profile
+                    </Button>
+                </ModalFooter>
             </Modal>
         </div>
         </>

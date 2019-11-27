@@ -38,11 +38,10 @@ export const PlayerInput = () => {
     let players = [];
     for (let num = 1; num <= numPlayers; num++) {
         players.push(
-            <div>
-            <span>
+            <div className='player-entry'>
                 <FormGroup
                     controlId={`player${num}`}
-                    className='player-entry'
+                    className='player-name'
                 >
                     <FormControl 
                         type='text' 
@@ -52,8 +51,6 @@ export const PlayerInput = () => {
                         onChange={(e) => handleNameInput(num, e.target.value)} 
                     />
                 </FormGroup>
-            </span>
-            <span>
                 <DropdownButton
                     title={
                         gameData[`player${num}`].race == "" 
@@ -64,10 +61,11 @@ export const PlayerInput = () => {
                         :
                         gameData[`player${num}`].race
                         }
+                        className='player-race'
+                        variant='outline-dark'
                     >
                     {createRaceDropdown(num)}
                 </DropdownButton>
-            </span>
             </div>
         );
     }

@@ -31,7 +31,6 @@ import Table from 'react-bootstrap/Table';
             placement="right"
             overlay={
                 <Popover id="player-names">
-                    <PopoverTitle>Game Results</PopoverTitle>
                     <PopoverContent>
                         <Table striped>
                             <thead>
@@ -48,5 +47,5 @@ import Table from 'react-bootstrap/Table';
                 </Popover>
             }
         >
-        <Button variant="primary">{gameData.winner}</Button>
+        <Button variant='outline-dark'>{gameData.winner}</Button>
         </OverlayTrigger>

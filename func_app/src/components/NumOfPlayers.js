@@ -45,6 +45,7 @@ export const NumOfPlayers = () => {
                 :
                 `${gameData.numPlayers} players`
             }
+            variant='outline-primary'
         >
             {players}
         </DropdownButton> 

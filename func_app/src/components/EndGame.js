@@ -5,19 +5,21 @@ export default ({
     cancelGame,
     completeGame,
 }) => 
-    <ButtonGroup className='end-game'>
-        <Button
-            className='cancel-game'
-            data-testid='cancel-game'
-            onClick={cancelGame}
-        >
-            Cancel
-        </Button>
-        <Button
-            className='complete-game'
-            data-testid='complete-game'
-            onClick={completeGame}
-        >
-            Complete Game
-        </Button>
-    </ButtonGroup>
+        <div className='end-game'>
+            <Button
+                className='cancel-game'
+                data-testid='cancel-game'
+                onClick={cancelGame}
+                variant='outline-danger'
+            >
+                Cancel
+            </Button>
+            <Button
+                className='complete-game'
+                data-testid='complete-game'
+                onClick={completeGame}
+                variant='outline-success'
+            >
+                Complete Game
+            </Button>
+        </div>

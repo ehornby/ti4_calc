@@ -96,11 +96,11 @@ export const Sidebar = ({ setDisplayGame }) => {
                 </ModalHeader>
                 <ModalBody>Are you sure you wish to abandon the current game?</ModalBody>  
                 <ModalFooter>
-                    <Button onClick={() => setShowCancel(false)}>
-                        No, keep playing!
+                    <Button onClick={handleCancel} variant='outline-danger'>
+                        Yes, abandon game!
                     </Button>
-                    <Button onClick={handleCancel}>
-                        Yes,abandon game!
+                    <Button onClick={() => setShowCancel(false)} variant='outline-success'>
+                        No, keep playing!
                     </Button>
                 </ModalFooter>
             </Modal>
@@ -129,11 +129,13 @@ export const Sidebar = ({ setDisplayGame }) => {
                 <ModalFooter>
                     <Button
                         onClick={handleCloseNewGame}
+                        variant='outline-danger'
                     >
                         Cancel
                     </Button>
                     <Button
                         onClick={handleStartGame}
+                        variant='outline-success'
                     >
                         Start game!
                     </Button>
