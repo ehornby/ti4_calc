@@ -10,13 +10,14 @@ ModalFooter,
 Button, 
 Form,
 FormGroup,
-FormControl } from 'react-bootstrap';
+FormControl, 
+FormLabel} from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { firebaseLogin, 
 firebaseRegister, 
 firebaseSignOut, 
-getUserSignInName } from '../../helpers/auth';
+getUserSignInName, changeUserSignInName } from '../../helpers/auth';
 
 export const Header = () => {
     const { loggedIn, setLoggedIn } = useUserValue();
@@ -27,6 +28,7 @@ export const Header = () => {
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const userDisplayName = getUserSignInName();
+    const [displayName, setDisplayName] = useState('')
 
     const clearData = () => {
         setEmail('');
@@ -61,6 +63,10 @@ export const Header = () => {
 
     const handleConfirmChange = val => {
         setConfirm(val)
+    }
+
+    const handleNameChange = val => {
+        setDisplayName(val);
     }
 
     const handleLogout = () => {
@@ -160,52 +166,78 @@ export const Header = () => {
             </Modal>
         </div>
         <div className='show-register'>
-        <Modal
-            show={showRegister}
-            onHide={() => setShowLogin(false)}
-        >
-            <ModalHeader>
-                <ModalTitle>Register</ModalTitle>
-            </ModalHeader>
-            <ModalBody>                    
-                <Form>
-                    <FormGroup controlId='email'>
-                        <FormControl 
-                            type='email' 
-                            placeholder='Email address'
-                            onChange={(e) => handleEmailChange(e.target.value)}                            
+            <Modal
+                show={showRegister}
+                onHide={() => setShowLogin(false)}
+            >
+                <ModalHeader>
+                    <ModalTitle>Register</ModalTitle>
+                </ModalHeader>
+                <ModalBody>                    
+                    <Form>
+                        <FormGroup controlId='email'>
+                            <FormControl 
+                                type='email' 
+                                placeholder='Email address'
+                                onChange={(e) => handleEmailChange(e.target.value)}                            
+                            />
+                        </FormGroup>
+                        <FormGroup controlId='password'>
+                            <FormControl 
+                                type='password' 
+                                placeholder='Password' 
+                                onChange={(e) => handlePasswordChange(e.target.value)}                        
                         />
-                    </FormGroup>
-                    <FormGroup controlId='password'>
-                        <FormControl 
-                            type='password' 
-                            placeholder='Password' 
-                            onChange={(e) => handlePasswordChange(e.target.value)}                        
-                    />
-                    </FormGroup>
-                    <FormGroup controlId='confirm'>
-                        <FormControl 
-                            type='password' 
-                            placeholder='Confirm Password' 
-                            onChange={(e) => handleConfirmChange(e.target.value)}
-                    />
-                    </FormGroup>
-                </Form>
-            </ModalBody>
-            <ModalFooter>
-                <Button
-                    onClick={handleRegister}
-                >
-                    Register
-                </Button>
-                <Button
-                    onClick={() => setShowRegister(false)}
-                >
-                    Cancel
-                </Button>
-            </ModalFooter>
-        </Modal>
-
+                        </FormGroup>
+                        <FormGroup controlId='confirm'>
+                            <FormControl 
+                                type='password' 
+                                placeholder='Confirm Password' 
+                                onChange={(e) => handleConfirmChange(e.target.value)}
+                        />
+                        </FormGroup>
+                    </Form>
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        onClick={handleRegister}
+                    >
+                        Register
+                    </Button>
+                    <Button
+                        onClick={() => setShowRegister(false)}
+                    >
+                        Cancel
+                    </Button>
+                </ModalFooter>
+            </Modal>
+        </div>
+        <div className='show-profile'>
+            <Modal
+                show={showProfile}
+                onHide={() => setShowProfile(false)}
+            >
+                <ModalHeader>
+                    <ModalTitle>Profile</ModalTitle>
+                </ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup controlId='displayName'>
+                        <FormLabel>Change your display name</FormLabel>
+                            <FormControl
+                                type='text'
+                                placeholder='Enter new display name here'
+                                onChange={(e) => handleNameChange(e.target.value)}
+                            />
+                        </FormGroup>
+                        <Button
+                            onClick={() => changeUserSignInName(displayName)}
+                        >
+                            Test
+                        </Button>
+                    </Form>
+                </ModalBody>
+            </Modal>
         </div>
         </>
     );

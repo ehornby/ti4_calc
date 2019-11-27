@@ -8,8 +8,7 @@ ModalTitle,
 ModalBody,
 ModalFooter,
 Button,
-Table
-} from 'react-bootstrap';
+Table } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { deleteActiveGame, 
@@ -49,7 +48,6 @@ export const Game = () => {
         deleteActiveGame('testID1234');
         setGameInProgress(false);
     }
-
     const completeGame = () => {
         setShowScoreConfirm(false);
         setGameWinner(gameData, setGameData);

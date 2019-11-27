@@ -5,8 +5,7 @@ import
 ModalTitle,
 ModalBody,
 ModalFooter,
-Button
-} from 'react-bootstrap';
+Button } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import { deleteActiveGame, saveNewGame } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';

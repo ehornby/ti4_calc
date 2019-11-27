@@ -51,3 +51,15 @@ export const getUserSignInName = () => {
         }
     }
 }
+
+export const changeUserSignInName = async name => {
+    await firebase
+        .auth()
+        .currentUser
+        .updateProfile({
+            displayName: name
+        })
+        .catch(error => {
+            alert(error)
+        });        
+}

@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 
 export default ({
     cancelGame,
-    completeGame
+    completeGame,
 }) => 
     <ButtonGroup className='end-game'>
         <Button
@@ -11,7 +11,7 @@ export default ({
             data-testid='cancel-game'
             onClick={cancelGame}
         >
-            Cancel Game
+            Cancel
         </Button>
         <Button
             className='complete-game'
