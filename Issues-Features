@@ -5,7 +5,3 @@
 
 3. No ability to change or reset passwords
 
-4. Would be a good exercise to rewrite as functional rather than 
-    class-based
-
-5. Check config file to ensure API gateway info is correct

@@ -23,6 +23,7 @@ class App extends Component {
 
   // Creates gameData object with correct number of players
   // gameData format: [playername, score, race]
+
   createGameData = (playerNames) => {
     let gameData = {};
     for (let i = 1; i <= playerNames.length; i++) {
@@ -40,6 +41,7 @@ class App extends Component {
   // reflecting score changes
   //  - player: player ID (property)
   //  - dir: bool (true: up, false: down)
+
   updateScore = (player, dir) => {
     let gameData = {...this.state.gameData}
     let score = gameData[`${player}`][1];
