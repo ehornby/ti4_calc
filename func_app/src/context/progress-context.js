@@ -1,7 +1,3 @@
-/*
-    TODO - remove this context and implement directly in Sidebar
-*/
-
 import React, { createContext, useContext } from 'react';
 import { useProgress } from '../hooks';
 

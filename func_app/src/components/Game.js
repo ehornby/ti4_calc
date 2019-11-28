@@ -26,7 +26,7 @@ export const Game = () => {
 
     useEffect(() => {
         if (gameInProgress) {
-            getActiveGameId('testID1234', setActiveGameId);
+            getActiveGameId(setActiveGameId);
         }
         else {
             setActiveGameId('');
@@ -45,7 +45,7 @@ export const Game = () => {
 
     const cancelGame = () => {
         setGameData( {} );
-        deleteActiveGame('testID1234');
+        deleteActiveGame();
         setGameInProgress(false);
     }
     const completeGame = () => {

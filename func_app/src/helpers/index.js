@@ -1,5 +1,6 @@
 import { firebase } from '../firebase';
 import moment from 'moment';
+import { getUserId } from './auth';
 /*
     @param userId (string): userId of currently logged in user
 
@@ -7,7 +8,8 @@ import moment from 'moment';
     all matching documents (should be one deleted record maximum)
 */
 
-export const deleteActiveGame = (userId) => {
+export const deleteActiveGame = () => {
+    const userId = getUserId();
     firebase
         .firestore()
         .collection('games')
@@ -28,7 +30,8 @@ export const deleteActiveGame = (userId) => {
     Creates an initial game entry in Firebase
 */
 
-export const saveNewGame = (gameData, userId) => {
+export const saveNewGame = (gameData) => {
+    const userId = getUserId();
     firebase
         .firestore()
         .collection('games')
@@ -47,7 +50,8 @@ export const saveNewGame = (gameData, userId) => {
     Queries Firebase for active game and sets active gameId 
 */
 
-export const getActiveGameId =  (userId, setActiveGameId) => {
+export const getActiveGameId =  (setActiveGameId) => {
+    const userId = getUserId();
     firebase
         .firestore()
         .collection('games')
