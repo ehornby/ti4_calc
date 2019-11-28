@@ -5,7 +5,10 @@ Tracks games of Twilight Imperium, displays results and winners of previously pl
 
 ### Prerequisites
 
-`Node.js - https://nodejs.org/en/`
+```
+Node.js - https://nodejs.org/en/
+Google Firebase account
+```
 
 ### Installing
 
@@ -13,6 +16,11 @@ Tracks games of Twilight Imperium, displays results and winners of previously pl
 2. Clone this repo to a local directory
 3. Navigate to `/src` folder using command prompt, PowerShell, etc.
 4. Run command `npm install`.
+5. Create a new Firebase project at `firebase.google.com`.
+6. Set up a new Cloud Firestore with the following collections:
+  - users
+  - games
+7. 
 
 Once `npm install` has completed, run command `npm start` to start the development server and open the project on port 3000.
 
