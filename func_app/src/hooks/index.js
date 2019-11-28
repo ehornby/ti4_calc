@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { firebase } from '../firebase';
 import { useUserValue } from '../context';
+import { getUserId } from '../helpers/auth';
 
 /*
     Queries Firebase for all instances in 'games' where userId matches the logged in 
@@ -11,12 +12,13 @@ import { useUserValue } from '../context';
 export const useProgress = () => {
     const [gameInProgress, setGameInProgress] = useState(false)
     const { loggedIn, setLoggedIn } = useUserValue();
+    const userId = getUserId();
 
     useEffect(() => {
         firebase
             .firestore()
             .collection('games')
-            .where('userId', '==', 'testID1234')
+            .where('userId', '==', userId)
             .where('inProgress', '==', true)
             .get()
             .then(snapshot => {
@@ -54,12 +56,13 @@ export const useGameData = () => {
         }
     }
     const [gameData, setGameData] = useState(initialData)
+    const userId = getUserId();
 
     useEffect(() => {
         firebase
             .firestore()
             .collection('games')
-            .where('userId', '==', 'testID1234')
+            .where('userId', '==', userId)
             .where('inProgress', '==', true)
             .get()
             .then(snapshot => {

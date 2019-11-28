@@ -38,6 +38,7 @@ export const getUserId = () => {
     if (user) {
         return user.uid;
     }
+    else { return '' }
 }
 
 export const getUserSignInName = () => {
