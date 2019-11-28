@@ -84,7 +84,7 @@ export const Header = () => {
                 ?
                 <>
                 <div className = 'welcome'>
-                    <span className='welcome'>Welcome, {userDisplayName}</span>
+                    <span className='welcome'>Welcome, {userDisplayName}!</span>
                 </div>
                 <div className='links'>
                     <span 
@@ -243,7 +243,7 @@ export const Header = () => {
                         >
                             Change Name
                         </Button>
-                        </div>
+                    </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

@@ -80,6 +80,8 @@ export const saveGameInProgress = (gameId, gameData) => {
         { merge: true });
 }
 
+// Updates gameData 'winner' property
+
 export const setGameWinner = (gameData, setGameData) => {
     for (let i = 0; i < gameData.numPlayers; i++) {
         if (gameData[`player${i+1}`].score == 10) {
@@ -89,4 +91,22 @@ export const setGameWinner = (gameData, setGameData) => {
         }
     }
     return null;
+}
+
+// Checks if more than one player has chosen the same race
+
+export const checkForDuplicateRaces = (gameData) => {
+    let numPlayers = gameData.numPlayers
+    let races = [];
+
+    for (let i = 0; i < numPlayers; i++) {
+        races.push(
+            gameData[`player${i+1}`].race
+        )
+    }
+    let raceSet = new Set(races);
+    if (raceSet.size !== races.length) {
+        return true;
+    }
+    else { return false }
 }

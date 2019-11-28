@@ -7,7 +7,7 @@ ModalBody,
 ModalFooter,
 Button } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
-import { deleteActiveGame, saveNewGame } from '../../helpers';
+import { deleteActiveGame, saveNewGame, checkForDuplicateRaces } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
 
@@ -40,6 +40,15 @@ export const Sidebar = ({ setDisplayGame }) => {
         saveNewGame(gameData, 'testID1234');
         setGameInProgress(true);
         setDisplayGame(true);
+    }
+
+    const validateDuplicates = () => {
+        if (checkForDuplicateRaces(gameData)) {
+            alert('All players must choose a different race!')
+        }
+        else {
+            handleStartGame();
+        }
     }
 
     return (
@@ -134,7 +143,7 @@ export const Sidebar = ({ setDisplayGame }) => {
                         Cancel
                     </Button>
                     <Button
-                        onClick={handleStartGame}
+                        onClick={validateDuplicates}
                         variant='outline-success'
                     >
                         Start game!

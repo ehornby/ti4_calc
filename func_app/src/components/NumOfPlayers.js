@@ -12,7 +12,6 @@ export const NumOfPlayers = () => {
     const createGameDataTemplate = (eventKey) => {
         let tempData = { ...gameData};
         tempData.numPlayers = eventKey;
-        console.log(eventKey);
         for (let i = 1; i <= eventKey; i++) {
             tempData[`player${i}`] = {
                 name: "",
