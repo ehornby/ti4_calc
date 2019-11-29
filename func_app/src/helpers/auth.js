@@ -45,6 +45,7 @@ export const getUserSignInName = () => {
     let user = firebase.auth().currentUser;
     if (user) {
         if (user.displayName) {
+            localStorage.setItem('displayName', user.displayName)
             return user.displayName;
         }
         else {

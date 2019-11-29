@@ -71,6 +71,7 @@ export const Header = () => {
     const handleLogout = () => {
         firebaseSignOut();
         setLoggedIn(false);
+        localStorage.clear();
     }
 
     return (
