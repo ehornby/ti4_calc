@@ -219,7 +219,11 @@ header {
 =================================================== */
 .splash {
     text-align: center;
-    padding-top: 100px;    
+    padding-top: 100px;
+    
+    h2 {
+        font-size: 20px;
+    }  
 }
 
 /* Game, History

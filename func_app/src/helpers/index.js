@@ -122,3 +122,15 @@ export const checkForDuplicateRaces = (gameData) => {
     }
     else { return false }
 }
+
+export const createNewUser = (email) => {
+    let userId = getUserId();
+    firebase
+        .firestore()
+        .collection('users')
+        .add({
+            email: email,
+            userId: userId
+        })
+
+}
