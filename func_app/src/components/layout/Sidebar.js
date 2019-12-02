@@ -15,8 +15,9 @@ getActiveGameId } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
 import { getUserId } from '../../helpers/auth';
+import { Link } from 'react-router-dom';
 
-export const Sidebar = ({ setDisplayGame }) => {
+export const Sidebar = () => {
     const { gameInProgress, setGameInProgress } = useProgressValue();
     const { gameData, setGameData } = useGameDataValue();
     const [showCancel, setShowCancel] = useState(false);
@@ -55,7 +56,6 @@ export const Sidebar = ({ setDisplayGame }) => {
         setShowNewGame(false);
         saveNewGame(gameData, activeGameId);
         setGameInProgress(true);
-        setDisplayGame(true);
     }
 
     const validateDuplicates = () => {
@@ -92,18 +92,16 @@ export const Sidebar = ({ setDisplayGame }) => {
                 <li
                     data-testid='continue-game'
                     className='continue-game'
-                    onClick={() => setDisplayGame(true)}
                 >
-                    Continue Game
+                    <Link to='/game'>Continue Game</Link>
                 </li>
                 : null
                 }
                 <li
                     data-testid='game-results'
                     className='game-results'
-                    onClick={() => setDisplayGame(false)}
                 >
-                    Game History
+                    <Link to='/history'>Game History</Link>
                 </li>
             </ul>
         </div>
@@ -161,12 +159,14 @@ export const Sidebar = ({ setDisplayGame }) => {
                     >
                         Cancel
                     </Button>
+                    <Link to='/game'>
                     <Button
                         onClick={validateDuplicates}
                         variant='outline-success'
                     >
                         Start game!
                     </Button>
+                    </Link>
                 </ModalFooter>
             </Modal>
         </div>
