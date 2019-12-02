@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgressValue, useGameDataValue } from '../../context';
 import 
 { Modal, 
@@ -7,22 +7,38 @@ ModalBody,
 ModalFooter,
 Button } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
-import { deleteActiveGame, saveNewGame, checkForDuplicateRaces } from '../../helpers';
+import 
+{ deleteActiveGame, 
+saveNewGame, 
+checkForDuplicateRaces, 
+getActiveGameId } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
+import { getUserId } from '../../helpers/auth';
 
 export const Sidebar = ({ setDisplayGame }) => {
     const { gameInProgress, setGameInProgress } = useProgressValue();
     const { gameData, setGameData } = useGameDataValue();
     const [showCancel, setShowCancel] = useState(false);
     const [showNewGame, setShowNewGame] = useState(false);
+    const [activeGameId, setActiveGameId] = useState('');
+    const userId = getUserId();
+
+    useEffect(() => {
+        if (gameInProgress) {
+            getActiveGameId(setActiveGameId);
+        }
+        else {
+            setActiveGameId('');
+        }
+    },[gameInProgress]);
 
     // Handles cancelling an in-progress game and deleting the DB record
 
     const handleCancel = () => {
         setShowCancel(false);
         setGameData( {} );
-        deleteActiveGame('testID1234');
+        deleteActiveGame(userId);
         setGameInProgress(false);
     }
 
@@ -37,7 +53,7 @@ export const Sidebar = ({ setDisplayGame }) => {
 
     const handleStartGame = () => {
         setShowNewGame(false);
-        saveNewGame(gameData, 'testID1234');
+        saveNewGame(gameData, activeGameId);
         setGameInProgress(true);
         setDisplayGame(true);
     }
@@ -45,6 +61,9 @@ export const Sidebar = ({ setDisplayGame }) => {
     const validateDuplicates = () => {
         if (checkForDuplicateRaces(gameData)) {
             alert('All players must choose a different race!')
+        }
+        else if (!gameData.numPlayers) {
+            alert('You must select a number of players!');
         }
         else {
             handleStartGame();

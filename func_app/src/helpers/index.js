@@ -39,7 +39,8 @@ export const saveNewGame = (gameData) => {
             gameData: gameData,
             userId: userId,
             inProgress: true,
-            dateTime: moment().format('MMM Do YYYY')
+            dateTime: moment().format('MMM Do YYYY'),
+            winner: ''
         });
 }
 
@@ -59,7 +60,7 @@ export const getActiveGameId =  (setActiveGameId) => {
         .where('inProgress', '==', true)
         .get()
         .then(snapshot => {
-            const data = snapshot.docs.map(item => (
+            const setId = snapshot.docs.map(item => (
                 setActiveGameId(item.id)
             ));
     });
@@ -72,20 +73,24 @@ export const getActiveGameId =  (setActiveGameId) => {
     Writes current game progress to Firebase
 */
 
-export const saveGameInProgress = (gameId, gameData) => {
+export const saveCompletedGame = (gameId, gameData) => {
     firebase
         .firestore()
         .collection('games')
         .doc(gameId)
         .set({
             gameData: gameData,
-            inProgress: false,
+            inProgress: false
         },
         { merge: true });
 }
 
-// Updates gameData 'winner' property
+/* 
+    @param gameData (obj): object with data of in progress game
+    @param setGameData (fn): callback to update gameData state
 
+    Updates gameData 'winner' property
+*/
 export const setGameWinner = (gameData, setGameData) => {
     for (let i = 0; i < gameData.numPlayers; i++) {
         if (gameData[`player${i+1}`].score == 10) {
@@ -97,8 +102,11 @@ export const setGameWinner = (gameData, setGameData) => {
     return null;
 }
 
-// Checks if more than one player has chosen the same race
+/* 
+    @param gameData (obj): object with data of in progress game
 
+    Checks if more than one player has chosen the same race
+*/
 export const checkForDuplicateRaces = (gameData) => {
     let numPlayers = gameData.numPlayers
     let races = [];

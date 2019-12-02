@@ -71,6 +71,7 @@ export const useGameData = () => {
                 ));
                 if (data.length > 0) {
                     setGameData(data[0]);
+                    console.log(data);
                 }
             });
         }, []);
