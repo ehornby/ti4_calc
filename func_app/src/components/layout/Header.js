@@ -16,6 +16,7 @@ import
 firebaseRegister, 
 firebaseSignOut, 
 getUserSignInName, changeUserSignInName } from '../../helpers/auth';
+import { createNewUser } from '../../helpers';
 
 export const Header = () => {
     const { loggedIn, setLoggedIn } = useUserValue();
@@ -51,6 +52,7 @@ export const Header = () => {
         if (password === confirm) {
             firebaseRegister(email, password, setLoggedIn)
             setShowRegister(false);
+            createNewUser(email);
             clearData();
         }
         else {
