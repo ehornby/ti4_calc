@@ -41,7 +41,7 @@ export const Header = () => {
         setConfirm('')
     }
 
-    const handleLogin = async () => {
+    const handleLogin = () => {
         firebaseLogin(email, password, setLoggedIn)
         clearData();
         setShowLogin(false);

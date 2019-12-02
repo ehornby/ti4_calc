@@ -28,6 +28,15 @@ ul {
     padding: 0;
 }
 
+a {
+    color: black;
+
+    &:hover {
+        color: black;
+        text-decoration: none;
+    }
+}
+
 /* Variables
 =================================================== */
 $generic-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
@@ -220,6 +229,11 @@ header {
 .splash {
     text-align: center;
     padding-top: 100px;    
+
+    h2 {
+        margin-top: 20px;
+        font-size: 20px;
+    }
 }
 
 /* Game, History

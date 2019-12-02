@@ -7,14 +7,14 @@ export const App = () => {
 
   return (
     <>
-    <UserProvider>
-      <GameDataProvider>
-        <ProgressProvider>
-          <Header />
-          <Content />
-        </ProgressProvider>
-      </GameDataProvider>
-    </UserProvider>
-    </>
+      <UserProvider>
+        <GameDataProvider>
+          <ProgressProvider>
+            <Header />
+            <Content />
+          </ProgressProvider>
+        </GameDataProvider>
+      </UserProvider>
+      </>
   );
 }
