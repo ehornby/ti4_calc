@@ -9,8 +9,7 @@ ModalFooter,
 Button, 
 Form,
 FormGroup,
-FormControl, 
-FormLabel} from 'react-bootstrap';
+FormControl } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { firebaseLogin, 
@@ -26,8 +25,15 @@ export const Header = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
-    const userDisplayName = getUserSignInName();
-    const [displayName, setDisplayName] = useState('')
+    const [changeDisplayName, setChangeDisplayName] = useState('');
+    
+    let userDisplayName = '';
+    if (localStorage.getItem('displayName')) {
+        userDisplayName = localStorage.getItem('displayName');
+    }
+    else {
+        userDisplayName = getUserSignInName();
+    }
 
     const clearData = () => {
         setEmail('');
@@ -65,7 +71,7 @@ export const Header = () => {
     }
 
     const handleNameChange = val => {
-        setDisplayName(val);
+        setChangeDisplayName(val);
     }
 
     const handleLogout = () => {
@@ -238,7 +244,7 @@ export const Header = () => {
                     </div>
                     <div className='name-confirm'>
                         <Button
-                            onClick={() => changeUserSignInName(displayName)}
+                            onClick={() => changeUserSignInName(changeDisplayName)}
                             className='name-confirm'
                             variant='outline-primary'
                         >

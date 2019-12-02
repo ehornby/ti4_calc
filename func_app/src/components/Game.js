@@ -12,9 +12,9 @@ Table } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { deleteActiveGame, 
-saveGameInProgress, 
 getActiveGameId, 
-setGameWinner } from '../helpers';
+setGameWinner,
+saveCompletedGame} from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
@@ -33,13 +33,21 @@ export const Game = () => {
         }
     },[gameInProgress]);
 
+    // Ensures user does not close or reload window accidentally with a game in progress
+
+    window.addEventListener('beforeunload', (event) => {
+        if (gameInProgress) {
+            event.returnValue = 'Game in progress! Cancel game before leaving.';
+        }
+    });
+
     const updateScore = (id, inc) => {
         let tempData = {...gameData};
         let playerScore = tempData[`player${id}`].score;
 
         if (inc > 0 || (inc < 0 && playerScore > 0)) {
             tempData[`player${id}`].score += inc;  
-            setGameData(tempData);          
+            setGameData(tempData);
         }
     }
 
@@ -51,7 +59,7 @@ export const Game = () => {
     const completeGame = () => {
         setShowScoreConfirm(false);
         setGameWinner(gameData, setGameData);
-        saveGameInProgress(activeGameId, gameData, setGameData);
+        saveCompletedGame(activeGameId, gameData);
         setGameData( {} )
         setGameInProgress(false);
     }

@@ -7,7 +7,7 @@ import { useUserValue } from '../../context';
 
 export const Content = () => {
     const { loggedIn, setLoggedIn } = useUserValue();
-    const [displayGame, setDisplayGame] = useState(true);
+    const [displayGame, setDisplayGame] = useState(false);
     
     return (
         <section className='content'>

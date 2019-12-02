@@ -28,12 +28,10 @@ export const History = () => {
     const generateHistoryTable = () => {
         let history = [];
         let historyData = [...userHistory];
-        console.log(historyData);
 
         historyData.forEach(item => {
             let date = item.dateTime;
             let gameData = item.gameData;
-            console.log(date);
             history.push(
                 <tr>
                     <td>{date}</td>

@@ -143,6 +143,7 @@ header {
     align-items: stretch;
 
     .name-entry {
+        flex-grow: 5;
     }
 
     .name-confirm {

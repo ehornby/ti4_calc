@@ -1,5 +1,13 @@
 import firebase from 'firebase';
 
+/*
+    @param email (string) : email address from form
+    @param password (string) password from form
+    @param setLoggedIn: callback to set login state
+
+    Handles logging user in via Firebase auth
+*/
+
 export const firebaseLogin = async (email, password, setLoggedIn) => {
     await firebase
         .auth()
@@ -12,7 +20,15 @@ export const firebaseLogin = async (email, password, setLoggedIn) => {
     })
 }
 
-export const firebaseRegister = async (email, password,setLoggedIn) => {
+/*
+    @param email (string) : email address from form
+    @param password (string) password from form
+    @param setLoggedIn: callback to set login state
+
+    Handles registering user via Firebase auth (also logs in)
+*/
+
+export const firebaseRegister = async (email, password, setLoggedIn) => {
     await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
@@ -24,6 +40,8 @@ export const firebaseRegister = async (email, password,setLoggedIn) => {
     })
 }
 
+// Handles logging user out via Firebase auth
+
 export const firebaseSignOut = async () => {
     await firebase
         .auth()
@@ -33,6 +51,8 @@ export const firebaseSignOut = async () => {
     });
 }
 
+// Gets and returns user ID from currently logged in user
+
 export const getUserId = () => {
     let user = firebase.auth().currentUser;
     if (user) {
@@ -40,6 +60,11 @@ export const getUserId = () => {
     }
     else { return '' }
 }
+
+/* 
+    Gets and returns current user's display name if one is set,
+    otherwise returns user email
+*/
 
 export const getUserSignInName = () => {
     let user = firebase.auth().currentUser;
@@ -53,6 +78,12 @@ export const getUserSignInName = () => {
         }
     }
 }
+
+/*
+    @parm name (string): desired display name from form
+
+    Updates user's profile with new display name
+*/
 
 export const changeUserSignInName = async name => {
     await firebase
