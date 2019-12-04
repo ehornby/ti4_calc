@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export default ({
     cancelGame,
     completeGame,
 }) => 
-        <div className='end-game'>
+        <div className='end-game' data-testid='end-game'>
             <Button
                 className='cancel-game'
                 data-testid='cancel-game'

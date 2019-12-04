@@ -13,7 +13,7 @@ import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { deleteActiveGame, 
 getActiveGameId, 
-setGameWinner,
+getGameWinner,
 saveCompletedGame} from '../helpers';
 
 export const Game = () => {
@@ -58,10 +58,17 @@ export const Game = () => {
     }
     const completeGame = () => {
         setShowScoreConfirm(false);
-        setGameWinner(gameData, setGameData);
+        setGameWinner();
         saveCompletedGame(activeGameId, gameData);
         setGameData( {} )
         setGameInProgress(false);
+    }
+
+    const setGameWinner = () => {
+        let winner = getGameWinner(gameData);
+        let tempData = {...gameData};
+        tempData.winner = winner;
+        setGameData(tempData);
     }
 
     // Checks to see if any player has achieved a score of ten points
@@ -106,7 +113,7 @@ export const Game = () => {
 
     return (
         <>
-        <div className='game'>
+        <div className='game' data-testid='game'>
             {gameInProgress &&
             <>
             <Table>
@@ -128,7 +135,7 @@ export const Game = () => {
             </>
             }
         </div>
-        <div className='show-confirm-score'>
+        <div className='show-confirm-score' data-testid='show-confirm-score'>
             <Modal
                 show={showScoreConfirm}
                 onHide={() => setShowScoreConfirm(false)}

@@ -87,16 +87,13 @@ export const saveCompletedGame = (gameId, gameData) => {
 
 /* 
     @param gameData (obj): object with data of in progress game
-    @param setGameData (fn): callback to update gameData state
 
-    Updates gameData 'winner' property
+    Returns game winner, or null if no winner
 */
-export const setGameWinner = (gameData, setGameData) => {
+export const getGameWinner = (gameData) => {
     for (let i = 0; i < gameData.numPlayers; i++) {
         if (gameData[`player${i+1}`].score == 10) {
-            let tempData = {...gameData};
-            tempData.winner = gameData[`player${i+1}`].name;
-            setGameData(tempData);
+            return gameData[`player${i+1}`].name;
         }
     }
     return null;

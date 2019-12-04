@@ -43,7 +43,7 @@ export const History = () => {
     }
 
     return (
-        <div className='history'>
+        <div className='history' data-testid='history'>
             <Table className='history__table'>
                 <thead>
                     <tr>
