@@ -92,10 +92,10 @@ export const Header = () => {
                 {loggedIn 
                 ?
                 <>
-                <div className = 'welcome'>
+                <div className = 'welcome' data-testid='welcome'>
                     <span className='welcome'>Welcome, {userDisplayName}!</span>
                 </div>
-                <div className='links'>
+                <div className='links' data-testid='links-loggedin'>
                     <span 
                         className='logout'
                         onClick={handleLogout}
@@ -112,7 +112,7 @@ export const Header = () => {
                 </>
                 :
                 <>
-                <div className='links'>
+                <div className='links' data-testid='links-loggedout'>
                     <span 
                         className='login'
                         onClick={() => setShowLogin(true)

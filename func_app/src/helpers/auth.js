@@ -1,9 +1,10 @@
 import firebase from 'firebase';
+import { createNewUser } from '.';
 
 /*
-    @param email (string) : email address from form
-    @param password (string) password from form
-    @param setLoggedIn: callback to set login state
+    @param email {string} : email address from form
+    @param password {string} password from form
+    @param setLoggedIn {fn}: callback to set login state
 
     Handles logging user in via Firebase auth
 */
@@ -13,6 +14,7 @@ export const firebaseLogin = async (email, password, setLoggedIn) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
+            localStorage.clear();
             setLoggedIn(true);
         })
         .catch(error => {
@@ -21,9 +23,9 @@ export const firebaseLogin = async (email, password, setLoggedIn) => {
 }
 
 /*
-    @param email (string) : email address from form
-    @param password (string) password from form
-    @param setLoggedIn: callback to set login state
+    @param email {string} : email address from form
+    @param password {string} password from form
+    @param setLoggedIn {fn}: callback to set login state
 
     Handles registering user via Firebase auth (also logs in)
 */
@@ -38,6 +40,8 @@ export const firebaseRegister = async (email, password, setLoggedIn) => {
         .catch(error => {
             alert(error);
     })
+    localStorage.clear();
+    createNewUser(email);
 }
 
 // Handles logging user out via Firebase auth
@@ -80,7 +84,7 @@ export const getUserSignInName = () => {
 }
 
 /*
-    @parm name (string): desired display name from form
+    @param name {string}: desired display name from form
 
     Updates user's profile with new display name
 */

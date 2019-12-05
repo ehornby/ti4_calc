@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "firebase": "^7.2.3",
-    "firebaseui": "^4.3.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
@@ -34,5 +33,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@testing-library/react": "^9.3.2",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0"
   }
 }

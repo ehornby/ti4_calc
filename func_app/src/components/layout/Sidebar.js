@@ -9,9 +9,9 @@ Button } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { deleteActiveGame, 
-saveNewGame, 
 checkForDuplicateRaces, 
-getActiveGameId } from '../../helpers';
+checkPlayerNames, 
+checkForValidRaces } from '../../helpers';
 import { NumOfPlayers } from '../NumOfPlayers';
 import { PlayerInput } from '../PlayerInput';
 import { getUserId } from '../../helpers/auth';
@@ -22,17 +22,22 @@ export const Sidebar = () => {
     const { gameData, setGameData } = useGameDataValue();
     const [showCancel, setShowCancel] = useState(false);
     const [showNewGame, setShowNewGame] = useState(false);
-    const [activeGameId, setActiveGameId] = useState('');
+    const [validInput, setValidInput] = useState(false);
     const userId = getUserId();
 
     useEffect(() => {
-        if (gameInProgress) {
-            getActiveGameId(setActiveGameId);
+        if (
+            checkForDuplicateRaces(gameData) &&
+            checkForValidRaces(gameData) &&
+            checkPlayerNames(gameData)
+        ) {
+            setValidInput(true);
         }
         else {
-            setActiveGameId('');
+            setValidInput(false);
         }
-    },[gameInProgress]);
+
+    }, [gameData])
 
     // Handles cancelling an in-progress game and deleting the DB record
 
@@ -54,22 +59,9 @@ export const Sidebar = () => {
 
     const handleStartGame = () => {
         setShowNewGame(false);
-        saveNewGame(gameData, activeGameId);
         setGameInProgress(true);
     }
-
-    const validateDuplicates = () => {
-        if (checkForDuplicateRaces(gameData)) {
-            alert('All players must choose a different race!')
-        }
-        else if (!gameData.numPlayers) {
-            alert('You must select a number of players!');
-        }
-        else {
-            handleStartGame();
-        }
-    }
-
+    
     return (
         <>
         <div className='sidebar' data-testid='sidebar'>
@@ -151,6 +143,14 @@ export const Sidebar = () => {
                 <div className='show-new-game__input'>
                     <PlayerInput />               
                 </div>
+                <div className={validInput ? 'show-new-game__valid' : 'show-new-game__invalid'}>
+                    {!validInput 
+                    ?
+                    <p>Please complete all input with unique races for each player!</p>
+                    :
+                    <p>Good to go!</p>
+                    }
+                </div>
             </ModalBody>
                 <ModalFooter>
                     <Button
@@ -161,8 +161,9 @@ export const Sidebar = () => {
                     </Button>
                     <Link to='/game'>
                     <Button
-                        onClick={validateDuplicates}
+                        onClick={handleStartGame}
                         variant='outline-success'
+                        disabled={!validInput}
                     >
                         Start game!
                     </Button>
