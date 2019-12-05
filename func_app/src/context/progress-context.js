@@ -1,9 +1,8 @@
-import React, { createContext, useContext } from 'react';
-import { useProgress } from '../hooks';
+import React, { createContext, useContext, useState } from 'react';
 
 export const ProgressContext = createContext();
 export const ProgressProvider = ({children}) => {
-    const { gameInProgress, setGameInProgress } = useProgress();
+    const [ gameInProgress, setGameInProgress ] = useState(false);
 
     return (
         <ProgressContext.Provider value={{ gameInProgress, setGameInProgress }}>

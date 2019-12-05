@@ -12,26 +12,14 @@ Table } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import 
 { deleteActiveGame, 
-getActiveGameId, 
 getGameWinner,
-saveCompletedGame} from '../helpers';
+saveCompletedGame,
+checkForSingleWinner} from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
     const { gameInProgress, setGameInProgress } = useProgressValue();
-    const [activeGameId, setActiveGameId] = useState('');
     const [showScoreConfirm, setShowScoreConfirm] = useState(false);
-
-    // Loads the active game ID if a game is currently in progress
-
-    useEffect(() => {
-        if (gameInProgress) {
-            getActiveGameId(setActiveGameId);
-        }
-        else {
-            setActiveGameId('');
-        }
-    },[gameInProgress]);
 
     // Ensures user does not close or reload window accidentally with a game in progress
 
@@ -56,10 +44,10 @@ export const Game = () => {
         deleteActiveGame();
         setGameInProgress(false);
     }
+
     const completeGame = () => {
         setShowScoreConfirm(false);
-        setGameWinner();
-        saveCompletedGame(activeGameId, gameData);
+        saveCompletedGame(gameData);
         setGameData( {} )
         setGameInProgress(false);
     }
@@ -79,10 +67,14 @@ export const Game = () => {
         for (let i = 0; i < numPlayers; i++) {
             if (gameData[`player${i+1}`].score == 10) {
                 winnerFound = true;
+                setGameWinner();
                 break;
             }
         }
-        if (winnerFound) { completeGame(); }
+        if (!checkForSingleWinner(gameData)) {
+            alert('Multiple players have ten or more points - please correct!');
+        }
+        else if (winnerFound) { completeGame(); }
         else {
             setShowScoreConfirm(true);
         }
