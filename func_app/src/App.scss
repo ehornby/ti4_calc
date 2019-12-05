@@ -211,6 +211,18 @@ header {
             }
         }
     }
+
+    &__valid {
+        text-align: center;
+        color: green;
+        font-weight: bold;
+    }
+
+    &__invalid {
+        text-align: center;
+        color: red;
+        font-weight: bold;
+    }
 }
 
 /* Content
@@ -254,6 +266,11 @@ header {
     button {
         margin: 0 5px;
     }
+}
+
+.valid-winner {
+    color: red;
+    font-weight: bold;
 }
 
 .history {

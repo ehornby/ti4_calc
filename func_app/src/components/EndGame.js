@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 export default ({
     cancelGame,
     completeGame,
+    validWinner,
 }) => 
         <div className='end-game' data-testid='end-game'>
             <Button
@@ -19,6 +20,7 @@ export default ({
                 data-testid='complete-game'
                 onClick={completeGame}
                 variant='outline-success'
+                disabled={!validWinner}
             >
                 Complete Game
             </Button>

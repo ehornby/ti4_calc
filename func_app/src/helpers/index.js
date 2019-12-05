@@ -59,10 +59,10 @@ export const checkForSingleWinner = gameData => {
             count++;
         }
     }
-    if (count == 1) {
-        return true;
+    if (count > 1) {
+        return false;
     }
-    else { return false };
+    else { return true };
 }
 
 export const checkPlayerNames = gameData => {
@@ -96,10 +96,8 @@ export const checkForDuplicateRaces = gameData => {
 }
 
 export const checkForValidRaces = gameData => {
-    console.log(gameData);
     for (let i = 0; i < gameData.numPlayers; i++) {
         if (gameData[`player${i+1}`].race == "") {
-            console.log('invalid race')
             return false;
         }
     }

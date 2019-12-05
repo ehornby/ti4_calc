@@ -143,6 +143,14 @@ export const Sidebar = () => {
                 <div className='show-new-game__input'>
                     <PlayerInput />               
                 </div>
+                <div className={validInput ? 'show-new-game__valid' : 'show-new-game__invalid'}>
+                    {!validInput 
+                    ?
+                    <p>Please complete all input with unique races for each player!</p>
+                    :
+                    <p>Good to go!</p>
+                    }
+                </div>
             </ModalBody>
                 <ModalFooter>
                     <Button

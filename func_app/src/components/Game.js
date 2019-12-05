@@ -14,12 +14,13 @@ import
 { deleteActiveGame, 
 getGameWinner,
 saveCompletedGame,
-checkForSingleWinner} from '../helpers';
+checkForSingleWinner } from '../helpers';
 
 export const Game = () => {
     const { gameData, setGameData } = useGameDataValue();
     const { gameInProgress, setGameInProgress } = useProgressValue();
     const [showScoreConfirm, setShowScoreConfirm] = useState(false);
+    const [validWinner, setValidWinner] = useState(true);
 
     // Ensures user does not close or reload window accidentally with a game in progress
 
@@ -28,6 +29,15 @@ export const Game = () => {
             event.returnValue = 'Game in progress! Cancel game before leaving.';
         }
     });
+
+    useEffect(() => {
+        if (checkForSingleWinner(gameData)) {
+            setValidWinner(true);
+        }
+        else {
+            setValidWinner(false);
+        }
+    }, [gameData]);
 
     const updateScore = (id, inc) => {
         let tempData = {...gameData};
@@ -55,7 +65,10 @@ export const Game = () => {
     const setGameWinner = () => {
         let winner = getGameWinner(gameData);
         let tempData = {...gameData};
-        tempData.winner = winner;
+        if (winner && winner != '') {
+            tempData.winner = winner;
+        }
+        console.log(tempData);
         setGameData(tempData);
     }
 
@@ -65,7 +78,7 @@ export const Game = () => {
         let winnerFound = false;
         const numPlayers = gameData.numPlayers;
         for (let i = 0; i < numPlayers; i++) {
-            if (gameData[`player${i+1}`].score == 10) {
+            if (gameData[`player${i+1}`].score >= 10) {
                 winnerFound = true;
                 setGameWinner();
                 break;
@@ -120,10 +133,30 @@ export const Game = () => {
                     {generatePlayerTable()}
                 </tbody>
             </Table>
-            <EndGame 
-                cancelGame={cancelGame}
-                completeGame={checkForWinner}
-            />
+            <div className='valid-winner'>
+                {!validWinner &&
+                <p>Multiple players have ten or more points, please correct!</p>
+                }
+            </div>
+            <div className='end-game' data-testid='end-game'>
+                <Button
+                    className='cancel-game'
+                    data-testid='cancel-game'
+                    onClick={cancelGame}
+                    variant='outline-danger'
+                >
+                    Cancel
+                </Button>
+                <Button
+                    className='complete-game'
+                    data-testid='complete-game'
+                    onClick={completeGame}
+                    variant='outline-success'
+                    disabled={!validWinner}
+                >
+                    Complete Game
+                </Button>
+        </div>
             </>
             }
         </div>
