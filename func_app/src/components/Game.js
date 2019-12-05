@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useGameDataValue, useProgressValue } from '../context';
 import ScoreCounter from './ScoreCounter';
-import EndGame from './EndGame';
 import 
 { Modal, 
 ModalTitle,
@@ -36,7 +35,7 @@ export const Game = () => {
         }
         else {
             setValidWinner(false);
-        }
+        }      
     }, [gameData]);
 
     const updateScore = (id, inc) => {
@@ -47,6 +46,7 @@ export const Game = () => {
             tempData[`player${id}`].score += inc;  
             setGameData(tempData);
         }
+        checkForGameWinner();
     }
 
     const cancelGame = () => {
@@ -62,32 +62,22 @@ export const Game = () => {
         setGameInProgress(false);
     }
 
-    const setGameWinner = () => {
+    const checkForGameWinner = () => {
         let winner = getGameWinner(gameData);
         let tempData = {...gameData};
         if (winner && winner != '') {
             tempData.winner = winner;
         }
-        console.log(tempData);
+        else {
+            tempData.winner = '';
+        }
         setGameData(tempData);
     }
 
-    // Checks to see if any player has achieved a score of ten points
-
-    const checkForWinner = () => {
-        let winnerFound = false;
-        const numPlayers = gameData.numPlayers;
-        for (let i = 0; i < numPlayers; i++) {
-            if (gameData[`player${i+1}`].score >= 10) {
-                winnerFound = true;
-                setGameWinner();
-                break;
-            }
+    const handleComplete = () => {
+        if (gameData.winner && gameData.winner != '') {
+            completeGame();
         }
-        if (!checkForSingleWinner(gameData)) {
-            alert('Multiple players have ten or more points - please correct!');
-        }
-        else if (winnerFound) { completeGame(); }
         else {
             setShowScoreConfirm(true);
         }
@@ -150,7 +140,7 @@ export const Game = () => {
                 <Button
                     className='complete-game'
                     data-testid='complete-game'
-                    onClick={completeGame}
+                    onClick={handleComplete}
                     variant='outline-success'
                     disabled={!validWinner}
                 >
@@ -172,7 +162,7 @@ export const Game = () => {
                 </ModalHeader>
                 <ModalBody>No one has made it to 10 points - do you want to continue playing?</ModalBody>  
                 <ModalFooter>
-                    <Button onClick={completeGame} variant='outline-danger'>
+                    <Button onClick={handleComplete} variant='outline-danger'>
                         No, end the game!
                     </Button>
                     <Button onClick={() => setShowScoreConfirm(false)} variant='outline-success'>
